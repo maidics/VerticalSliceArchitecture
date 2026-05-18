@@ -1,0 +1,22 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.3.3">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>VsaTemplate.AppHost</RootNamespace>
+    <AssemblyName>VsaTemplate.AppHost</AssemblyName>
+    <TargetFramework>net10.0</TargetFramework>
+    <UserSecretsId>17498916-7299-464c-83d4-abc0d4d154ff</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference
+      Include="..\VsaTemplate.Shared\VsaTemplate.Shared.csproj"
+      IsAspireProjectResource="false"
+    />
+    <ProjectReference Include="..\VsaTemplate\VsaTemplate.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.JavaScript" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.Sqlite" />
+  </ItemGroup>
+</Project>

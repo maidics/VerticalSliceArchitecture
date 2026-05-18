@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Maidics Dávid",
+  "classifications": [ "Web", "WebAPI", "Architecture" ],
+  "name": "Vertical Slice Architecture Template",
+  "identity": "Vsa.MinimalApi.Template",
+  "shortName": "vsa-api",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "VsaTemplate",
+  "preferNameDirectory": true
+}

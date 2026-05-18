@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/VsaTemplate.AppHost/VsaTemplate.AppHost.csproj">
+      <Platform Project="x64" />
+    </Project>
+    <Project Path="src/VsaTemplate.Shared/VsaTemplate.Shared.csproj" />
+    <Project Path="src/VsaTemplate/VsaTemplate.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/VsaTemplate.Tests/VsaTemplate.Tests.csproj" />
+  </Folder>
+</Solution>
