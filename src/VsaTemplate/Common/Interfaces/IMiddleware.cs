@@ -1,4 +1,4 @@
-namespace VsaTemplate.Common.Pipeline;
+namespace VsaTemplate.Common.Interfaces;
 
 public interface IMiddleware
 {

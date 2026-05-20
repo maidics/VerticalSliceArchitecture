@@ -1,6 +1,9 @@
+using System.Reflection;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Common.Pipeline;
 using VsaTemplate.Database;
@@ -41,6 +44,7 @@ public static class DependencyInjection
 
             builder.Services.AddAuthorizationBuilder();
 
+            //TODO: fix error: System.InvalidOperationException: No sign-in authentication handler is registered for the scheme 'Identity.Bearer'. The registered sign-in schemes are: Identity.Application, Identity.External, Identity.TwoFactorRememberMe, Identity.TwoFactorUserId. Did you forget to call AddAuthentication().AddCookie("Identity.Bearer",...)?
             builder
                 .Services.AddIdentityCore<User>()
                 .AddRoles<IdentityRole<Guid>>()
@@ -71,6 +75,10 @@ public static class DependencyInjection
                 options.AddOperationTransformer<IdentityApiOperationTransformer>();
             });
             */
+
+            //Features
+            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            builder.Services.AddHandlers();
 
             // Services
             builder.Services.AddSingleton(TimeProvider.System);

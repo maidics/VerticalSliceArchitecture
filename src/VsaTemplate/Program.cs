@@ -31,7 +31,7 @@ app.UseExceptionHandler(options => { });
 
 //app.MapDefaultEndpoints(); // ServiceDefaults observability
 app.MapGroup("/api/identity").MapIdentityApi<User>().WithTags("Users");
-app.MapEndpoints(typeof(Program).Assembly);
+app.MapEndpoints();
 app.MapOpenApi();
 app.MapScalarApiReference();
 app.MapFallbackToFile("index.html"); //TODO: what does this do?

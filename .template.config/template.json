@@ -4,7 +4,7 @@
   "classifications": [ "Web", "WebAPI", "Architecture" ],
   "name": "Vertical Slice Architecture Template",
   "identity": "Vsa.MinimalApi.Template",
-  "shortName": "vsa-api",
+  "shortName": "vsa-sln",
   "tags": {
     "language": "C#",
     "type": "project"

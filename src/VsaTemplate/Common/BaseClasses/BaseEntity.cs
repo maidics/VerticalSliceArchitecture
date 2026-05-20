@@ -5,7 +5,7 @@ namespace VsaTemplate.Common.BaseClasses;
 // credit to: Jason Taylor
 public abstract class BaseEntity
 {
-    public required Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     private readonly List<BaseEvent> _events = new();
 

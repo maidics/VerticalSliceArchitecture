@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using VsaTemplate.Common.Models;
+using IMiddleware = VsaTemplate.Common.Interfaces.IMiddleware;
 
 namespace VsaTemplate.Common.Pipeline;
 

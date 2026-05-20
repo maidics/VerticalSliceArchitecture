@@ -1,0 +1,54 @@
+using FluentValidation;
+using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Models;
+using VsaTemplate.Database;
+
+namespace VsaTemplate.Features.Example.Commands;
+
+public sealed record UpdateExampleCommand(Guid Id, string Content);
+
+public sealed class UpdateExampleCommandValidator : AbstractValidator<UpdateExampleCommand>
+{
+    public UpdateExampleCommandValidator()
+    {
+        RuleFor(x => x.Content).NotEmpty();
+    }
+}
+
+public sealed class UpdateExampleCommandHandler : IHandler
+{
+    private readonly ApplicationDbContext _context;
+
+    public UpdateExampleCommandHandler(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<Result> Handle(
+        UpdateExampleCommand command,
+        CancellationToken cancellationToken
+    )
+    {
+        var example = await _context.Examples.FirstOrDefaultAsync(
+            x => x.Id == command.Id,
+            cancellationToken
+        );
+
+        if (example is null)
+            return Result.NotFound(["Example not found."]);
+
+        var existingWithContent = await _context.Examples.FirstOrDefaultAsync(
+            x => x.Content == command.Content,
+            cancellationToken
+        );
+
+        if (existingWithContent is not null)
+            return Result.Conflict([$"Example with '{command.Content}' content already exists."]);
+
+        example.Content = command.Content;
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return Result.Success();
+    }
+}

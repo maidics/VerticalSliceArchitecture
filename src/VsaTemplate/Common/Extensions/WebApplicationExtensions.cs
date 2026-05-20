@@ -6,14 +6,38 @@ using VsaTemplate.Features.Users;
 
 namespace VsaTemplate.Common.Extensions;
 
-// credit: Jason Taylor
 public static class WebApplicationExtensions
 {
     extension(WebApplication app)
     {
-        public WebApplication MapEndpoints(Assembly assembly)
+        /*
+        public WebApplication MapEndpointsWithValidationFilter()
         {
-            var endpointGroupTypes = assembly
+            var globalEndpointGroup = app.MapGroup("").AddEndpointFilter<ValidationFilter<>>()
+            
+            var endpointTypes = Assembly
+                .GetExecutingAssembly()
+                .GetExportedTypes()
+                .Where(type =>
+                    type is { IsAbstract: false, IsClass: true }
+                    && type.IsAssignableTo(typeof(IEndpoint))
+                )
+                .Select(type => (IEndpoint)Activator.CreateInstance(type)!);
+
+            foreach (var endpoint in endpointTypes)
+            {
+                endpoint.MapEndpoint(app);
+            }
+
+            return app;
+        }
+        */
+
+        // credit: Jason Taylor
+        public WebApplication MapEndpoints()
+        {
+            var endpointGroupTypes = Assembly
+                .GetExecutingAssembly()
                 .GetExportedTypes()
                 .Where(t =>
                     t is { IsAbstract: false, IsInterface: false }
