@@ -24,26 +24,14 @@ public sealed class LoggingFilter : IEndpointFilter
         var result = await next(context);
 
         _logger.LogInformation(
-            "Request: {Path} [{HttpMethod}], {@UserId}, {@Request}, {@Result}",
-            context.HttpContext.Request.Path.Value,
+            "Request: {HttpMethod} {Path}, {@UserId}, {@Request}, {@ResponseStatusCode}",
             context.HttpContext.Request.Method,
+            context.HttpContext.Request.Path.Value,
             _user.Id,
             request is null ? "none" : request,
-            GetLoggableResult(result)
+            (result as IStatusCodeHttpResult)?.StatusCode
         );
 
         return result;
-    }
-
-    //TODO: this returns null for status code & "no content" for result value always
-    private static object GetLoggableResult(object? result)
-    {
-        if (result is null)
-            return "no result";
-
-        var statusCode = (result as IStatusCodeHttpResult)?.StatusCode;
-        var resultValue = (result as IValueHttpResult)?.Value ?? "no content";
-
-        return new { StatusCode = statusCode, Body = resultValue };
     }
 }

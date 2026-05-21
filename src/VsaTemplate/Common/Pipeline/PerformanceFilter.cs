@@ -30,9 +30,9 @@ public sealed class PerformanceFilter : IEndpointFilter
         if (elapsedMilliseconds > 500)
         {
             _logger.LogWarning(
-                "Long running request: {Path} [{HttpMethod}], {@UserId}, ({ElapsedMilliseconds}ms)",
-                context.HttpContext.Request.Path,
+                "Long running request: {HttpMethod} {Path} , {@UserId}, ({ElapsedMilliseconds}ms)",
                 context.HttpContext.Request.Method,
+                context.HttpContext.Request.Path.Value,
                 elapsedMilliseconds,
                 _user.Id
             );
