@@ -1,6 +1,7 @@
 using Scalar.AspNetCore;
 using VsaTemplate;
 using VsaTemplate.Common.Extensions;
+using VsaTemplate.Common.Pipeline;
 using VsaTemplate.Database;
 using VsaTemplate.Features.Users;
 
@@ -29,9 +30,16 @@ app.UseFileServer();
 
 app.UseExceptionHandler(options => { });
 
+app.MapGroup("/api")
+    .AddEndpointFilter<LoggingFilter>()
+    .AddEndpointFilter<ValidationFilter>()
+    .AddEndpointFilter<PerformanceFilter>()
+    .MapEndpoints();
+
 //app.MapDefaultEndpoints(); // ServiceDefaults observability
 app.MapGroup("/api/identity").MapIdentityApi<User>().WithTags("Users");
-app.MapEndpoints();
+
+//app.MapEndpoints();
 app.MapOpenApi();
 app.MapScalarApiReference();
 app.MapFallbackToFile("index.html"); //TODO: what does this do?

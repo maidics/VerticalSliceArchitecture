@@ -8,28 +8,22 @@ using VsaTemplate.Features.Users;
 
 namespace VsaTemplate.Features.Example;
 
-public class Examples : IEndpointGroup
+public class ExampleEndpoints : IEndpointGroup
 {
+    public static string? RoutePrefix => "Examples";
+
     public static void Map(RouteGroupBuilder groupBuilder)
     {
-        groupBuilder
-            .MapPost("", CreateExample)
-            .AddValidationFilter<CreateExampleCommand>()
-            .RequireAuthorization(Roles.Administrator);
+        groupBuilder.MapPost("", CreateExample);
 
-        groupBuilder.MapGet("", GetExamples);
+        groupBuilder.MapGet("", GetExamples).RequireAuthorizationWithRole(Roles.User);
 
-        groupBuilder
-            .MapPut("", UpdateExample)
-            .AddValidationFilter<UpdateExampleCommand>()
-            .RequireAuthorization(Roles.Administrator);
+        groupBuilder.MapPut("", UpdateExample);
 
-        groupBuilder
-            .MapDelete("{exampleId:guid}", DeleteExample)
-            .RequireAuthorization(Roles.Administrator);
+        groupBuilder.MapDelete("{exampleId:guid}", DeleteExample);
     }
 
-    public static async Task<Results<NoContent, ProblemHttpResult>> CreateExample(
+    public static async Task<Results<Ok<Guid>, ProblemHttpResult>> CreateExample(
         CreateExampleCommandHandler handler,
         CreateExampleCommand command,
         CancellationToken cancellationToken

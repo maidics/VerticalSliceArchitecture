@@ -5,7 +5,7 @@ using VsaTemplate.Database;
 
 namespace VsaTemplate.Features.Example.Commands;
 
-public sealed record CreateExampleCommand(string Content);
+public sealed record CreateExampleCommand(string Content) : IRequest;
 
 public sealed class CreateExampleCommandValidator : AbstractValidator<CreateExampleCommand>
 {
@@ -24,7 +24,7 @@ public sealed class CreateExampleCommandHandler : IHandler
         _context = context;
     }
 
-    public async Task<Result> Handle(
+    public async Task<Result<Guid>> Handle(
         CreateExampleCommand command,
         CancellationToken cancellationToken
     )
@@ -42,6 +42,6 @@ public sealed class CreateExampleCommandHandler : IHandler
         await _context.Examples.AddAsync(example, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Result.Success();
+        return Result.Success(example.Id);
     }
 }

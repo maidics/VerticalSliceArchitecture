@@ -5,7 +5,7 @@ using VsaTemplate.Database;
 
 namespace VsaTemplate.Features.Example.Commands;
 
-public sealed record UpdateExampleCommand(Guid Id, string Content);
+public sealed record UpdateExampleCommand(Guid Id, string Content) : IRequest;
 
 public sealed class UpdateExampleCommandValidator : AbstractValidator<UpdateExampleCommand>
 {

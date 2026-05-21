@@ -1,4 +1,6 @@
 using FluentValidation;
+using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Models;
 
 namespace VsaTemplate.Common.Pipeline;
 
@@ -14,36 +16,44 @@ namespace VsaTemplate.Common.Pipeline;
 */
 
 //TODO: check if the framework will return negative HTTP response automatically if a query or route param is empty
-public sealed class ValidationFilter<TRequest>(ILogger<ValidationFilter<TRequest>> logger)
-    : IEndpointFilter
-    where TRequest : notnull
+public sealed class ValidationFilter : IEndpointFilter
 {
+    private readonly ILogger<ValidationFilter> _logger;
+    private readonly CurrentUser _user;
+
+    public ValidationFilter(ILogger<ValidationFilter> logger, CurrentUser user)
+    {
+        _logger = logger;
+        _user = user;
+    }
+
     public async ValueTask<object?> InvokeAsync(
         EndpointFilterInvocationContext context,
         EndpointFilterDelegate next
     )
     {
-        var request = context.Arguments.OfType<TRequest>().FirstOrDefault();
+        var request = context.Arguments.OfType<IRequest>().FirstOrDefault();
 
         if (request is null)
         {
-            throw new ArgumentException(
-                $"Endpoint at '{context.HttpContext.Request.Path}' does not contain an argument of '{typeof(TRequest)}' type."
-            );
+            return await next(context);
         }
 
+        var type = request.GetType();
+        var validatorType = typeof(IValidator<>).MakeGenericType(type);
         var validators = context
-            .HttpContext.RequestServices.GetServices<IValidator<TRequest>>()
+            .HttpContext.RequestServices.GetServices(validatorType)
+            .Cast<IValidator>()
             .ToList();
+
+        var validationContext = new ValidationContext<object>(request);
 
         if (validators.Count != 0)
         {
             var cancellationToken = context.HttpContext.RequestAborted;
 
             var validationResults = await Task.WhenAll(
-                validators.Select(v =>
-                    v.ValidateAsync(new ValidationContext<TRequest>(request), cancellationToken)
-                )
+                validators.Select(v => v.ValidateAsync(validationContext, cancellationToken))
             );
 
             var failures = validationResults
@@ -57,9 +67,11 @@ public sealed class ValidationFilter<TRequest>(ILogger<ValidationFilter<TRequest
                     .GroupBy(x => x.PropertyName)
                     .ToDictionary(g => g.Key, g => g.Select(x => x.ErrorMessage).ToArray());
 
-                logger.LogWarning(
-                    "Validation failed for '{Path}' endpoint. Failures: {@ValidationErrors}",
+                _logger.LogWarning(
+                    "Request validation failed: {Path} [{HttpMethod}], {@UserId}, {@ValidationErrors}",
                     context.HttpContext.Request.Path,
+                    context.HttpContext.Request.Method,
+                    _user.Id,
                     errorsDictionary
                 );
 
