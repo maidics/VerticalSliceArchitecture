@@ -34,29 +34,28 @@ public static class DependencyInjection
 
             builder.Services.AddScoped<DatabaseInitialiser>();
 
-            builder
-                .Services.AddAuthentication(options =>
-                {
-                    options.DefaultScheme = IdentityConstants.ApplicationScheme;
-                    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-                })
-                .AddIdentityCookies();
-
             builder.Services.AddAuthorizationBuilder();
 
-            //TODO: fix error: System.InvalidOperationException: No sign-in authentication handler is registered for the scheme 'Identity.Bearer'. The registered sign-in schemes are: Identity.Application, Identity.External, Identity.TwoFactorRememberMe, Identity.TwoFactorUserId. Did you forget to call AddAuthentication().AddCookie("Identity.Bearer",...)?
             builder
-                .Services.AddIdentityCore<User>()
+                .Services.AddIdentityApiEndpoints<User>()
                 .AddRoles<IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddSignInManager()
-                .AddDefaultTokenProviders()
-                .AddApiEndpoints();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Web
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    var allowedOrigins =
+                        builder.Configuration["CorsOrigins"] ?? "http://localhost:3000";
 
-            builder.Services.AddCors();
-
+                    policy
+                        .WithOrigins(allowedOrigins)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                });
+            });
             builder.Services.AddExceptionHandler<ExceptionHandler>();
 
             // Customise default API behaviour
@@ -68,18 +67,11 @@ public static class DependencyInjection
 
             builder.Services.AddOpenApi();
 
-            /*
-            builder.Services.AddOpenApi(options =>
-            {
-                options.AddOperationTransformer<ApiExceptionOperationTransformer>();
-                options.AddOperationTransformer<IdentityApiOperationTransformer>();
-            });
-            */
-
             //Features
             builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             builder.Services.AddHandlers();
 
+            // Services
             // Services
             builder.Services.AddSingleton(TimeProvider.System);
 

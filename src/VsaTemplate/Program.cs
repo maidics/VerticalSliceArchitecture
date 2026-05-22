@@ -30,6 +30,9 @@ app.UseFileServer();
 
 app.UseExceptionHandler(options => { });
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapGroup("/api")
     .AddEndpointFilter<LoggingFilter>()
     .AddEndpointFilter<ValidationFilter>()
@@ -37,11 +40,12 @@ app.MapGroup("/api")
     .MapEndpoints();
 
 //app.MapDefaultEndpoints(); // ServiceDefaults observability
-app.MapGroup("/api/identity").MapIdentityApi<User>().WithTags("Users");
+app.MapGroup("/api/identity") /* TODO: add logging without logging credentials */
+    .MapIdentityApi<User>()
+    .WithTags("Users");
 
-//app.MapEndpoints();
 app.MapOpenApi();
 app.MapScalarApiReference();
-app.MapFallbackToFile("index.html"); //TODO: what does this do?
+app.MapFallbackToFile("index.html");
 
 app.Run();

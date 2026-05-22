@@ -28,7 +28,7 @@ if (builder.ExecutionContext.IsRunMode)
         .WithRunScript("start")
         .WithReference(api)
         .WaitFor(api)
-        .WithHttpEndpoint(env: "PORT")
+        .WithHttpEndpoint(port: 3000, targetPort: 3000, env: "PORT")
         .WithEnvironment("VITE_API_URL", api.GetEndpoint("http"))
         .WithExternalHttpEndpoints();
 }
