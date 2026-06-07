@@ -3,7 +3,7 @@ using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Database;
 
-namespace VsaTemplate.Features.Example.Commands;
+namespace VsaTemplate.Features.Examples.Commands;
 
 public sealed record CreateExampleCommand(string Content) : IRequest;
 
@@ -15,11 +15,11 @@ public sealed class CreateExampleCommandValidator : AbstractValidator<CreateExam
     }
 }
 
-public sealed class CreateExampleCommandHandler : IHandler
+public sealed class CreateExampleCommandRequestHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public CreateExampleCommandHandler(ApplicationDbContext context)
+    public CreateExampleCommandRequestHandler(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -37,7 +37,7 @@ public sealed class CreateExampleCommandHandler : IHandler
         if (existing is not null)
             return Result.Conflict([$"Example already exists with content: {command.Content}"]);
 
-        var example = new Example { Content = command.Content };
+        var example = new Examples.Example { Content = command.Content };
 
         await _context.Examples.AddAsync(example, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);

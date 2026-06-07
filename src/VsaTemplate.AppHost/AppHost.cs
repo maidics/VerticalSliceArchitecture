@@ -1,4 +1,3 @@
-using Aspire.Hosting;
 using VsaTemplate.AppHost;
 using VsaTemplate.Shared;
 

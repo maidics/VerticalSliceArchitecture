@@ -24,9 +24,12 @@ public static class IEndpointRouteBuilderExtensions
             foreach (var type in endpointGroupTypes)
             {
                 var groupName =
-                    type.GetProperty(nameof(IEndpointGroup.RoutePrefix))?.GetValue(null) as string
-                    ?? type.Name;
-                var group = builder.MapGroup($"/{groupName}").WithTags(groupName);
+                    type.GetProperty(nameof(IEndpointGroup.Prefix))!.GetValue(null) as string;
+
+                var tags =
+                    type.GetProperty(nameof(IEndpointGroup.Tags))!.GetValue(null) as string[];
+
+                var group = builder.MapGroup($"/{groupName}").WithTags(tags!);
                 type.GetMethod(nameof(IEndpointGroup.Map))!.Invoke(null, [group]);
             }
 
@@ -39,7 +42,7 @@ public static class IEndpointRouteBuilderExtensions
 
             return builder;
 
-            static async Task<Ok> Logout(SignInManager<User> signInManager)
+            static async Task<Ok> Logout(SignInManager<ApplicationUser> signInManager)
             {
                 await signInManager.SignOutAsync();
                 return TypedResults.Ok();

@@ -3,7 +3,7 @@ using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Database;
 
-namespace VsaTemplate.Features.Example.Commands;
+namespace VsaTemplate.Features.Examples.Commands;
 
 public sealed record UpdateExampleCommand(Guid Id, string Content) : IRequest;
 
@@ -15,11 +15,11 @@ public sealed class UpdateExampleCommandValidator : AbstractValidator<UpdateExam
     }
 }
 
-public sealed class UpdateExampleCommandHandler : IHandler
+public sealed class UpdateExampleCommandRequestHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public UpdateExampleCommandHandler(ApplicationDbContext context)
+    public UpdateExampleCommandRequestHandler(ApplicationDbContext context)
     {
         _context = context;
     }

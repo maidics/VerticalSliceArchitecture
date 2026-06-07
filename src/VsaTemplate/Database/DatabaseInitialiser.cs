@@ -6,12 +6,12 @@ namespace VsaTemplate.Database;
 public sealed class DatabaseInitialiser
 {
     private readonly ApplicationDbContext _context;
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 
     public DatabaseInitialiser(
         ApplicationDbContext context,
-        UserManager<User> userManager,
+        UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole<Guid>> roleManager
     )
     {
@@ -46,10 +46,10 @@ public sealed class DatabaseInitialiser
                 );
         }
 
-        List<(User user, string role)> users =
+        List<(ApplicationUser user, string role)> users =
         [
             (
-                new User()
+                new ApplicationUser()
                 {
                     Email = "user@localhost",
                     UserName = "user@localhost",
@@ -58,7 +58,7 @@ public sealed class DatabaseInitialiser
                 Roles.User
             ),
             (
-                new User()
+                new ApplicationUser()
                 {
                     Email = "admin@localhost",
                     UserName = "admin@localhost",

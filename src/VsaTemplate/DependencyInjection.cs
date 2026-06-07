@@ -8,6 +8,7 @@ using VsaTemplate.Common.Models;
 using VsaTemplate.Common.Pipeline;
 using VsaTemplate.Database;
 using VsaTemplate.Features.Users;
+using VsaTemplate.Infrastructure;
 using VsaTemplate.Shared;
 
 namespace VsaTemplate;
@@ -37,7 +38,7 @@ public static class DependencyInjection
             builder.Services.AddAuthorizationBuilder();
 
             builder
-                .Services.AddIdentityApiEndpoints<User>()
+                .Services.AddIdentityApiEndpoints<ApplicationUser>()
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 

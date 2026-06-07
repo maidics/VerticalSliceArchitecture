@@ -2,13 +2,13 @@ using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Database;
 
-namespace VsaTemplate.Features.Example.Queries;
+namespace VsaTemplate.Features.Examples.Queries;
 
-public sealed class GetExampleByIdQueryHandler : IHandler
+public sealed class GetExampleByIdQueryRequestHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public GetExampleByIdQueryHandler(ApplicationDbContext context)
+    public GetExampleByIdQueryRequestHandler(ApplicationDbContext context)
     {
         _context = context;
     }

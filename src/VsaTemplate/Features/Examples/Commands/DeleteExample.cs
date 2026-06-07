@@ -2,13 +2,13 @@ using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Database;
 
-namespace VsaTemplate.Features.Example.Commands;
+namespace VsaTemplate.Features.Examples.Commands;
 
-public sealed class DeleteExampleCommandHandler : IHandler
+public sealed class DeleteExampleCommandRequestHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public DeleteExampleCommandHandler(ApplicationDbContext context)
+    public DeleteExampleCommandRequestHandler(ApplicationDbContext context)
     {
         _context = context;
     }

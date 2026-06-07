@@ -1,10 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>VsaTemplate.Tests</RootNamespace>
+    <AssemblyName>VsaTemplate.Tests</AssemblyName>
+  </PropertyGroup>
+
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Testing" />
     <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Respawn" />
     <PackageReference Include="Shouldly" />
   </ItemGroup>
 
@@ -14,5 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\VsaTemplate\VsaTemplate.csproj" />
+    <ProjectReference Include="..\TestAppHost\TestAppHost.csproj" />
   </ItemGroup>
 </Project>

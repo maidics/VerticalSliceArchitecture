@@ -1,12 +1,13 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using VsaTemplate.Features.Example;
+using VsaTemplate.Features.Examples;
 using VsaTemplate.Features.Users;
 
 namespace VsaTemplate.Database;
 
-public sealed class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+public sealed class ApplicationDbContext
+    : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
     public DbSet<Example> Examples => Set<Example>();
 

@@ -13,7 +13,8 @@ public static class ServiceCollectionExtensions
                 .GetExecutingAssembly()
                 .GetTypes()
                 .Where(t =>
-                    t is { IsClass: true, IsAbstract: false } && t.IsAssignableTo(typeof(IHandler))
+                    t is { IsClass: true, IsAbstract: false }
+                    && t.IsAssignableTo(typeof(IRequestHandler))
                 );
 
             foreach (var implementationType in implementationTypes)

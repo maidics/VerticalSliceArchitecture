@@ -8,4 +8,6 @@ public abstract class Roles
     public const string Administrator = nameof(Administrator);
 
     public static FrozenSet<string> All = [User, Administrator];
+
+    public static bool IsValid(string role) => All.Contains(role);
 }

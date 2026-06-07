@@ -1,4 +1,4 @@
 namespace VsaTemplate.Common.Interfaces;
 
 // marker interface for DI registration
-public interface IHandler;
+public interface IRequestHandler;

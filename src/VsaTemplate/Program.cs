@@ -11,7 +11,7 @@ builder.AddApplicationServices();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsProduction())
 {
     using var scope = app.Services.CreateScope();
 
@@ -41,7 +41,7 @@ app.MapGroup("/api")
 
 //app.MapDefaultEndpoints(); // ServiceDefaults observability
 app.MapGroup("/api/identity") /* TODO: add logging without logging credentials */
-    .MapIdentityApi<User>()
+    .MapIdentityApi<ApplicationUser>()
     .WithTags("Users");
 
 app.MapOpenApi();
@@ -49,3 +49,8 @@ app.MapScalarApiReference();
 app.MapFallbackToFile("index.html");
 
 app.Run();
+
+namespace VsaTemplate
+{
+    public partial class Program;
+}

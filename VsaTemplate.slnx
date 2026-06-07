@@ -14,6 +14,9 @@
     <Project Path="src/VsaTemplate/VsaTemplate.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/TestAppHost/TestAppHost.csproj">
+      <Platform Project="x64" />
+    </Project>
     <Project Path="tests/VsaTemplate.Tests/VsaTemplate.Tests.csproj" />
   </Folder>
 </Solution>
