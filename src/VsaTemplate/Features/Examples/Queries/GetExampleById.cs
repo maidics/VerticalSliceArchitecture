@@ -20,8 +20,9 @@ public sealed class GetExampleByIdQueryRequestHandler : IRequestHandler
     {
         var example = await _context
             .Examples.AsNoTracking()
+            .Where(x => x.Id == exampleId)
             .Select(x => new ExampleDto(x.Id, x.Content))
-            .FirstOrDefaultAsync(x => x.Id == exampleId, cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (example is null)
             return Result.NotFound(["Example not found."]);

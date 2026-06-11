@@ -27,12 +27,12 @@ public class ExampleEndpoints : IEndpointGroup
     }
 
     public static async Task<Results<Ok<Guid>, ProblemHttpResult>> CreateExample(
-        CreateExampleCommandRequestHandler requestHandler,
+        CreateExampleCommandHandler handler,
         CreateExampleCommand command,
         CancellationToken cancellationToken
     )
     {
-        var result = await requestHandler.Handle(command, cancellationToken);
+        var result = await handler.Handle(command, cancellationToken);
 
         return result.ToTypedResult();
     }
@@ -48,12 +48,12 @@ public class ExampleEndpoints : IEndpointGroup
     }
 
     public static async Task<Results<NoContent, ProblemHttpResult>> UpdateExample(
-        UpdateExampleCommandRequestHandler requestHandler,
+        UpdateExampleCommandHandler handler,
         UpdateExampleCommand command,
         CancellationToken cancellationToken
     )
     {
-        var result = await requestHandler.Handle(command, cancellationToken);
+        var result = await handler.Handle(command, cancellationToken);
 
         return result.ToTypedResult();
     }

@@ -15,11 +15,11 @@ public sealed class UpdateExampleCommandValidator : AbstractValidator<UpdateExam
     }
 }
 
-public sealed class UpdateExampleCommandRequestHandler : IRequestHandler
+public sealed class UpdateExampleCommandHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public UpdateExampleCommandRequestHandler(ApplicationDbContext context)
+    public UpdateExampleCommandHandler(ApplicationDbContext context)
     {
         _context = context;
     }

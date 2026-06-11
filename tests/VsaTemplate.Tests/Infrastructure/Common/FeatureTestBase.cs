@@ -5,15 +5,14 @@ namespace VsaTemplate.Tests.Infrastructure.Common;
 
 public abstract class FeatureTestBase
 {
-#pragma warning disable NUnit1032
-    public static IServiceScope Scope = SetUp.ScopeFactory.CreateScope();
-#pragma warning restore NUnit1032
-    public IServiceProvider ServiceCollection = Scope.ServiceProvider;
+    public IServiceScope Scope = null!;
 
     [SetUp]
     public async Task Setup()
     {
         await TestApp.ResetState();
+
+        Scope = SetUp.ScopeFactory.CreateScope();
     }
 
     [TearDown]
@@ -25,6 +24,6 @@ public abstract class FeatureTestBase
     public TRequestHandler GetRequestHandler<TRequestHandler>()
         where TRequestHandler : IRequestHandler
     {
-        return ServiceCollection.GetRequiredService<TRequestHandler>();
+        return Scope.ServiceProvider.GetRequiredService<TRequestHandler>();
     }
 }

@@ -15,11 +15,11 @@ public sealed class CreateExampleCommandValidator : AbstractValidator<CreateExam
     }
 }
 
-public sealed class CreateExampleCommandRequestHandler : IRequestHandler
+public sealed class CreateExampleCommandHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public CreateExampleCommandRequestHandler(ApplicationDbContext context)
+    public CreateExampleCommandHandler(ApplicationDbContext context)
     {
         _context = context;
     }

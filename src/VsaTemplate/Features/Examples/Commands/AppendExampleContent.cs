@@ -13,7 +13,7 @@ public sealed class AppendExampleContentCommandValidator
 {
     public AppendExampleContentCommandValidator()
     {
-        RuleFor(x => x.AdditionalContent).NotEmpty();
+        RuleFor(x => x.AdditionalContent).NotEmpty().WithMessage("Additional content is required.");
     }
 }
 
@@ -38,6 +38,18 @@ public sealed class AppendExampleContentCommandHandler : IRequestHandler
 
         if (example is null)
             return Result.NotFound(["Example not found."]);
+
+        var existing = await _context
+            .Examples.AsNoTracking()
+            .FirstOrDefaultAsync(
+                x => x.Content == example.Content + command.AdditionalContent,
+                cancellationToken
+            );
+
+        if (existing is not null)
+            return Result.Conflict([
+                $"Example with '{example.Content + command.AdditionalContent}' content already exists.",
+            ]);
 
         example.AppendContent(command.AdditionalContent);
 
