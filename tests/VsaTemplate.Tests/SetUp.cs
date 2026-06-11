@@ -1,7 +1,6 @@
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using VsaTemplate.Database;
 using VsaTemplate.Shared;
 using VsaTemplate.Tests.Infrastructure;
 
