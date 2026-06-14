@@ -25,8 +25,8 @@
     <Folder Include="ClientApp\" />
     <Folder Include="ClientApp\src\common\components\ui\" />
     <Folder Include="ClientApp\src\features\" />
-    <Folder Include="Database\Interceptors\" />
     <Folder Include="Database\Migrations\" />
+    <Folder Include="Features\Examples\Events\" />
     <Folder Include="wwwroot\openapi\" />
   </ItemGroup>
 

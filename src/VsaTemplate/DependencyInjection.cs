@@ -24,7 +24,7 @@ public static class DependencyInjection
             ArgumentException.ThrowIfNullOrEmpty(connectionString);
 
             builder.Services.AddDbContext<ApplicationDbContext>(
-                (sp, options) =>
+                (_, options) =>
                 {
                     options.UseSqlite(connectionString);
                     options.ConfigureWarnings(warnings =>
@@ -70,9 +70,9 @@ public static class DependencyInjection
 
             //Features
             builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            builder.Services.AddHandlers();
+            builder.Services.AddRequestHandlers();
+            builder.Services.AddDomainEventHandlers();
 
-            // Services
             // Services
             builder.Services.AddSingleton(TimeProvider.System);
 

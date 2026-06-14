@@ -1,10 +1,10 @@
 namespace VsaTemplate.Common.BaseClasses;
 
-// credit to: Jason Taylor
+// credit: Jason Taylor
 public abstract class BaseAuditableEntity : BaseEntity
 {
-    public DateTimeOffset Created { get; set; }
+    public DateTimeOffset CreatedOn { get; set; }
     public Guid? CreatedBy { get; set; }
-    public DateTimeOffset LastModified { get; set; }
-    public Guid? ModifiedBy { get; set; }
+    public DateTimeOffset LastModifiedOn { get; set; }
+    public Guid? LastModifiedBy { get; set; }
 }

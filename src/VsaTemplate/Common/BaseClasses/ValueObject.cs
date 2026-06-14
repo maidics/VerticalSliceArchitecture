@@ -1,5 +1,6 @@
 namespace VsaTemplate.Common.BaseClasses;
 
+// credit: Jason Taylor
 // Learn more: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
 public abstract class ValueObject
 {
