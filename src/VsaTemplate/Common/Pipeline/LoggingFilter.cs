@@ -1,4 +1,5 @@
 using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Infrastructure;
 
@@ -7,7 +8,7 @@ namespace VsaTemplate.Common.Pipeline;
 public sealed class LoggingFilter : IEndpointFilter
 {
     private readonly ILogger<LoggingFilter> _logger;
-    private readonly CurrentUser _user;
+    private readonly IUser _user;
 
     public LoggingFilter(ILogger<LoggingFilter> logger, CurrentUser user)
     {

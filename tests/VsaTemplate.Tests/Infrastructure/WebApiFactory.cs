@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
-using VsaTemplate.Common.Models;
-using VsaTemplate.Infrastructure;
+using VsaTemplate.Common.Interfaces;
 
 namespace VsaTemplate.Tests.Infrastructure;
 
@@ -19,10 +18,10 @@ public sealed class WebApiFactory(string connectionString) : WebApplicationFacto
         builder.ConfigureServices(services =>
         {
             services
-                .RemoveAll<CurrentUser>()
+                .RemoveAll<IUser>()
                 .AddTransient(_ =>
                 {
-                    var mock = new Mock<CurrentUser>();
+                    var mock = new Mock<IUser>();
 
                     mock.SetupGet(x => x.Roles).Returns(TestApp.GetUserRoles());
                     mock.SetupGet(x => x.Id).Returns(TestApp.GetUserId());

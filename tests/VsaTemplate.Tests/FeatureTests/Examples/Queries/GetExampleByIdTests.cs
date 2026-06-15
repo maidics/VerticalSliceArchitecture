@@ -12,9 +12,9 @@ public sealed class GetExampleByIdTests : FeatureTestBase
     [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
     {
-        var handler = GetRequestHandler<GetExampleByIdQueryRequestHandler>();
+        var handler = GetService<GetExampleByIdQueryRequestHandler>();
 
-        var result = await handler.Handle(Guid.NewGuid(), CancellationToken.None);
+        var result = await handler.Handle(Guid.NewGuid().ToString(), CancellationToken.None);
 
         result.ShouldBeFailed(ResultType.NotFound, ["Example not found."]);
     }
@@ -26,7 +26,7 @@ public sealed class GetExampleByIdTests : FeatureTestBase
 
         await TestApp.AddAsync(example);
 
-        var handler = GetRequestHandler<GetExampleByIdQueryRequestHandler>();
+        var handler = GetService<GetExampleByIdQueryRequestHandler>();
 
         var result = await handler.Handle(example.Id, CancellationToken.None);
 

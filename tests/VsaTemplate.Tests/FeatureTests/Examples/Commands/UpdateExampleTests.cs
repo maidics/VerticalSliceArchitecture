@@ -12,9 +12,9 @@ public sealed class UpdateExampleTests : FeatureTestBase
     [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
     {
-        var command = new UpdateExampleCommand(Guid.NewGuid(), "test");
+        var command = new UpdateExampleCommand(Guid.NewGuid().ToString(), "test");
 
-        var handler = GetRequestHandler<UpdateExampleCommandHandler>();
+        var handler = GetService<UpdateExampleCommandHandler>();
 
         var result = await handler.Handle(command, CancellationToken.None);
         result.ShouldBeFailed(ResultType.NotFound, ["Example not found."]);
@@ -29,7 +29,7 @@ public sealed class UpdateExampleTests : FeatureTestBase
 
         var command = new UpdateExampleCommand(example.Id, "new-test-content");
 
-        var handler = GetRequestHandler<UpdateExampleCommandHandler>();
+        var handler = GetService<UpdateExampleCommandHandler>();
 
         var result = await handler.Handle(command, CancellationToken.None);
         result.ShouldBeSuccessful();

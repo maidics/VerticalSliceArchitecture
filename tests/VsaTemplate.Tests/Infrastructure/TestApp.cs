@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Database;
 using VsaTemplate.Features.Users;
 
@@ -15,24 +17,24 @@ public static class TestApp
 {
     private static HttpClient? _httpClient;
 
-    private static Guid? _userId;
-    private static ImmutableArray<string> _roles;
+    private static string? _userId;
+    private static FrozenSet<string>? _roles;
 
-    public static Guid? GetUserId() => _userId;
+    public static string? GetUserId() => _userId;
 
-    public static ImmutableArray<string> GetUserRoles() => _roles;
+    public static FrozenSet<string>? GetUserRoles() => _roles;
 
     public static async Task ResetState()
     {
-        if (SetUp.Database is not null)
-            await SetUp.Database.ResetAsync();
+        if (TestSetUpFixture.Database is not null)
+            await TestSetUpFixture.Database.ResetAsync();
 
         _httpClient?.Dispose();
 
         _userId = null;
         _roles = [];
 
-        using var scope = SetUp.ScopeFactory.CreateScope();
+        using var scope = TestSetUpFixture.ScopeFactory.CreateScope();
         var roleManager = scope.ServiceProvider.GetRequiredService<
             RoleManager<IdentityRole<Guid>>
         >();
@@ -42,7 +44,7 @@ public static class TestApp
             await roleManager.CreateAsync(new IdentityRole<Guid>(role));
         }
 
-        _httpClient = SetUp.CreateHttpClient();
+        _httpClient = TestSetUpFixture.CreateHttpClient();
     }
 
     public static async Task<Guid> RunAsUserAsync(string email, string password, string[] roles)
@@ -52,7 +54,7 @@ public static class TestApp
                 $"Invalid role: {string.Join(", ", roles.Where(role => !Roles.IsValid(role)))}"
             );
 
-        using var scope = SetUp.ScopeFactory.CreateScope();
+        using var scope = TestSetUpFixture.ScopeFactory.CreateScope();
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
@@ -111,7 +113,7 @@ public static class TestApp
     )
         where TEntity : class
     {
-        using var scope = SetUp.ScopeFactory.CreateScope();
+        using var scope = TestSetUpFixture.ScopeFactory.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         return await context.Set<TEntity>().FirstOrDefaultAsync(expression);
@@ -120,7 +122,7 @@ public static class TestApp
     public static async Task AddAsync<TEntity>(TEntity entity)
         where TEntity : class
     {
-        using var scope = SetUp.ScopeFactory.CreateScope();
+        using var scope = TestSetUpFixture.ScopeFactory.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         await context.AddAsync(entity);
@@ -131,7 +133,7 @@ public static class TestApp
     public static async Task<int> CountAsync<TEntity>()
         where TEntity : class
     {
-        using var scope = SetUp.ScopeFactory.CreateScope();
+        using var scope = TestSetUpFixture.ScopeFactory.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         return await context.Set<TEntity>().CountAsync();

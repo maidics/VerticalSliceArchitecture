@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using VsaTemplate.Common.Extensions;
+using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Common.Pipeline;
 using VsaTemplate.Database;
@@ -75,8 +76,8 @@ public static class DependencyInjection
 
             // Services
             builder.Services.AddSingleton(TimeProvider.System);
-            builder.Services.AddScoped<CurrentUser>();
-            builder.Services.AddScoped<DomainEventDispatcher>();
+            builder.Services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
+            builder.Services.AddScoped<IUser, CurrentUser>();
         }
     }
 }

@@ -30,4 +30,8 @@
     <ProjectReference Include="..\..\src\VsaTemplate\VsaTemplate.csproj" />
     <ProjectReference Include="..\TestAppHost\TestAppHost.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="FeatureTests\Examples\Events\" />
+  </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Database;
 
@@ -14,7 +15,7 @@ public sealed class GetExampleByIdQueryRequestHandler : IRequestHandler
     }
 
     public async Task<Result<ExampleDto>> Handle(
-        Guid exampleId,
+        string exampleId,
         CancellationToken cancellationToken
     )
     {

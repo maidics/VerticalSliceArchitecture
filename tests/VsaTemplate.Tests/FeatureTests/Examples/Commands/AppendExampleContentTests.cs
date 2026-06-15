@@ -13,7 +13,7 @@ public sealed class AppendExampleContentTests : FeatureTestBase
     [Test]
     public async Task ShouldReturnValidationErrors()
     {
-        var command = new AppendExampleContentCommand(Guid.NewGuid(), "");
+        var command = new AppendExampleContentCommand(Guid.NewGuid().ToString(), "");
         var validator = new AppendExampleContentCommandValidator();
 
         var result = await validator.TestValidateAsync(command);
@@ -25,9 +25,9 @@ public sealed class AppendExampleContentTests : FeatureTestBase
     [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
     {
-        var command = new AppendExampleContentCommand(Guid.NewGuid(), "test");
+        var command = new AppendExampleContentCommand(Guid.NewGuid().ToString(), "test");
 
-        var handler = GetRequestHandler<AppendExampleContentCommandHandler>();
+        var handler = GetService<AppendExampleContentCommandHandler>();
 
         var result = await handler.Handle(command, CancellationToken.None);
         result.ShouldBeFailed(ResultType.NotFound, ["Example not found."]);
@@ -44,7 +44,7 @@ public sealed class AppendExampleContentTests : FeatureTestBase
 
         var command = new AppendExampleContentCommand(example2.Id, "-content");
 
-        var handler = GetRequestHandler<AppendExampleContentCommandHandler>();
+        var handler = GetService<AppendExampleContentCommandHandler>();
 
         var result = await handler.Handle(command, CancellationToken.None);
         result.ShouldBeFailed(
@@ -62,7 +62,7 @@ public sealed class AppendExampleContentTests : FeatureTestBase
 
         var command = new AppendExampleContentCommand(example.Id, "-content");
 
-        var handler = GetRequestHandler<AppendExampleContentCommandHandler>();
+        var handler = GetService<AppendExampleContentCommandHandler>();
 
         var result = await handler.Handle(command, CancellationToken.None);
         result.ShouldBeSuccessful(ResultType.Success);

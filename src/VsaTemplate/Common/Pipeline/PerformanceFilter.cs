@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Infrastructure;
 
@@ -7,7 +8,7 @@ namespace VsaTemplate.Common.Pipeline;
 public sealed class PerformanceFilter : IEndpointFilter
 {
     private readonly ILogger<PerformanceFilter> _logger;
-    private readonly CurrentUser _user;
+    private readonly IUser _user;
 
     public PerformanceFilter(ILogger<PerformanceFilter> logger, CurrentUser user)
     {

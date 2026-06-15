@@ -25,7 +25,7 @@ public sealed class GetExamplesTests : FeatureTestBase
 
         var entityIds = examples.Select(x => x.Id).ToList();
 
-        var handler = GetRequestHandler<GetExamplesQueryRequestHandler>();
+        var handler = GetService<GetExamplesQueryRequestHandler>();
 
         var dtos = await handler.Handle(CancellationToken.None);
         var dtoIds = dtos.Select(x => x.Id).ToList();

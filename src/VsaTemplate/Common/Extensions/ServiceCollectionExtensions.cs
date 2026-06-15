@@ -1,5 +1,6 @@
 using System.Reflection;
 using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 
 namespace VsaTemplate.Common.Extensions;
 
@@ -27,7 +28,6 @@ public static class ServiceCollectionExtensions
 
         public IServiceCollection AddDomainEventHandlers()
         {
-            // 1. Find all classes in the assembly
             var handlers = Assembly
                 .GetExecutingAssembly()
                 .GetTypes()

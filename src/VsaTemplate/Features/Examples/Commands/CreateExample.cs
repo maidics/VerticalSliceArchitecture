@@ -1,5 +1,5 @@
 using FluentValidation;
-using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Database;
 
@@ -24,7 +24,7 @@ public sealed class CreateExampleCommandHandler : IRequestHandler
         _context = context;
     }
 
-    public async Task<Result<Guid>> Handle(
+    public async Task<Result<string>> Handle(
         CreateExampleCommand command,
         CancellationToken cancellationToken
     )
@@ -37,7 +37,7 @@ public sealed class CreateExampleCommandHandler : IRequestHandler
         if (existing is not null)
             return Result.Conflict([$"Example already exists with content: {command.Content}"]);
 
-        var example = new Examples.Example { Content = command.Content };
+        var example = new Example { Content = command.Content };
 
         await _context.Examples.AddAsync(example, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);

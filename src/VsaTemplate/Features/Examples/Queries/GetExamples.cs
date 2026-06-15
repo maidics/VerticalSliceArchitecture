@@ -1,4 +1,5 @@
 using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Database;
 
 namespace VsaTemplate.Features.Examples.Queries;

@@ -1,4 +1,4 @@
-namespace VsaTemplate.Common.Interfaces;
+namespace VsaTemplate.Common.Interfaces.Features;
 
 public interface IEndpointGroup
 {

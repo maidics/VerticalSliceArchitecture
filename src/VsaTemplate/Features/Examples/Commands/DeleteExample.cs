@@ -1,4 +1,5 @@
 using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Database;
 
@@ -13,7 +14,7 @@ public sealed class DeleteExampleCommandRequestHandler : IRequestHandler
         _context = context;
     }
 
-    public async Task<Result> Handle(Guid exampleId, CancellationToken cancellationToken)
+    public async Task<Result> Handle(string exampleId, CancellationToken cancellationToken)
     {
         var example = await _context.Examples.FirstOrDefaultAsync(
             x => x.Id == exampleId,

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Features.Examples.Commands;
 using VsaTemplate.Features.Examples.Queries;
 
@@ -19,14 +20,14 @@ public class ExampleEndpoints : IEndpointGroup
 
         builder.MapPut("", UpdateExample);
 
-        builder.MapDelete("{exampleId:guid}", DeleteExample);
+        builder.MapDelete("{exampleId}", DeleteExample);
 
-        builder.MapGet("{exampleId:guid}", GetExampleById);
+        builder.MapGet("{exampleId}", GetExampleById);
 
         builder.MapPut("append-content", AppendExampleContent);
     }
 
-    public static async Task<Results<Ok<Guid>, ProblemHttpResult>> CreateExample(
+    public static async Task<Results<Ok<string>, ProblemHttpResult>> CreateExample(
         CreateExampleCommandHandler handler,
         CreateExampleCommand command,
         CancellationToken cancellationToken
@@ -60,7 +61,7 @@ public class ExampleEndpoints : IEndpointGroup
 
     public static async Task<Results<NoContent, ProblemHttpResult>> DeleteExample(
         DeleteExampleCommandRequestHandler requestHandler,
-        Guid exampleId,
+        string exampleId,
         CancellationToken cancellationToken
     )
     {
@@ -71,7 +72,7 @@ public class ExampleEndpoints : IEndpointGroup
 
     public static async Task<Results<Ok<ExampleDto>, ProblemHttpResult>> GetExampleById(
         GetExampleByIdQueryRequestHandler requestHandler,
-        Guid exampleId,
+        string exampleId,
         CancellationToken cancellationToken
     )
     {

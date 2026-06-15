@@ -1,8 +1,14 @@
-using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 
 namespace VsaTemplate.Infrastructure;
 
-public sealed class DomainEventDispatcher
+public interface IDomainEventDispatcher
+{
+    Task DispatchAsync<TEvent>(TEvent @event, CancellationToken cancellationToken)
+        where TEvent : IDomainEvent;
+}
+
+public sealed class DomainEventDispatcher : IDomainEventDispatcher
 {
     private readonly IServiceProvider _serviceProvider;
 

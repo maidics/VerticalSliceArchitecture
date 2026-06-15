@@ -12,9 +12,9 @@ public sealed class DeleteExampleTests : FeatureTestBase
     [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
     {
-        var handler = GetRequestHandler<DeleteExampleCommandRequestHandler>();
+        var handler = GetService<DeleteExampleCommandRequestHandler>();
 
-        var result = await handler.Handle(Guid.NewGuid(), CancellationToken.None);
+        var result = await handler.Handle(Guid.NewGuid().ToString(), CancellationToken.None);
         result.ShouldBeFailed(ResultType.NotFound, ["Example not found."]);
     }
 
@@ -25,7 +25,7 @@ public sealed class DeleteExampleTests : FeatureTestBase
 
         await TestApp.AddAsync(example);
 
-        var handler = GetRequestHandler<DeleteExampleCommandRequestHandler>();
+        var handler = GetService<DeleteExampleCommandRequestHandler>();
 
         var result = await handler.Handle(example.Id, CancellationToken.None);
         result.ShouldBeSuccessful(ResultType.Success);

@@ -1,5 +1,6 @@
 using FluentValidation;
 using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Infrastructure;
 
@@ -20,7 +21,7 @@ namespace VsaTemplate.Common.Pipeline;
 public sealed class ValidationFilter : IEndpointFilter
 {
     private readonly ILogger<ValidationFilter> _logger;
-    private readonly CurrentUser _user;
+    private readonly IUser _user;
 
     public ValidationFilter(ILogger<ValidationFilter> logger, CurrentUser user)
     {

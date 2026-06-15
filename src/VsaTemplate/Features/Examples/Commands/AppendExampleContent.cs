@@ -1,11 +1,12 @@
 using FluentValidation;
-using VsaTemplate.Common.Interfaces;
+using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Database;
+using VsaTemplate.Infrastructure;
 
 namespace VsaTemplate.Features.Examples.Commands;
 
-public sealed record AppendExampleContentCommand(Guid ExampleId, string AdditionalContent)
+public sealed record AppendExampleContentCommand(string ExampleId, string AdditionalContent)
     : IRequest;
 
 public sealed class AppendExampleContentCommandValidator
@@ -20,10 +21,15 @@ public sealed class AppendExampleContentCommandValidator
 public sealed class AppendExampleContentCommandHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
+    private readonly IDomainEventDispatcher _dispatcher;
 
-    public AppendExampleContentCommandHandler(ApplicationDbContext context)
+    public AppendExampleContentCommandHandler(
+        ApplicationDbContext context,
+        IDomainEventDispatcher dispatcher
+    )
     {
         _context = context;
+        _dispatcher = dispatcher;
     }
 
     public async Task<Result> Handle(
@@ -51,9 +57,11 @@ public sealed class AppendExampleContentCommandHandler : IRequestHandler
                 $"Example with '{example.Content + command.AdditionalContent}' content already exists.",
             ]);
 
-        example.AppendContent(command.AdditionalContent);
+        var @event = example.AppendContent(command.AdditionalContent);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        await _dispatcher.DispatchAsync(@event, cancellationToken);
 
         return Result.Success();
     }

@@ -18,7 +18,7 @@ public sealed class CreateExampleTests : FeatureTestBase
 
         var command = new CreateExampleCommand(example.Content);
 
-        var handler = GetRequestHandler<CreateExampleCommandHandler>();
+        var handler = GetService<CreateExampleCommandHandler>();
 
         var result = await handler.Handle(command, CancellationToken.None);
         result.ShouldBeFailed(
@@ -32,7 +32,7 @@ public sealed class CreateExampleTests : FeatureTestBase
     {
         var command = new CreateExampleCommand("test");
 
-        var handler = GetRequestHandler<CreateExampleCommandHandler>();
+        var handler = GetService<CreateExampleCommandHandler>();
 
         var result = await handler.Handle(command, CancellationToken.None);
         result.ShouldBeSuccessful();

@@ -1,42 +1,25 @@
-using System.Collections.Immutable;
+using System.Collections.Frozen;
 using System.Security.Claims;
-using VsaTemplate.Features.Users;
+using VsaTemplate.Common.Interfaces;
 
 namespace VsaTemplate.Infrastructure;
 
-public sealed class CurrentUser
+public sealed class CurrentUser : IUser
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    public string? Id { get; }
+    public FrozenSet<string>? Roles { get; }
 
     public CurrentUser(IHttpContextAccessor httpContextAccessor)
     {
-        _httpContextAccessor = httpContextAccessor;
-    }
-
-    public Guid? Id
-    {
-        get
+        if (httpContextAccessor.HttpContext is null)
         {
-            var id = _httpContextAccessor.HttpContext?.User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-            if (id is null)
-                return null;
-
-            if (Guid.TryParse(id, out var guid))
-                return guid;
-
-            //TODO: make this more specific exception
-            throw new Exception(
-                $"Failed to parse non-null {nameof(ApplicationUser)}.{nameof(ApplicationUser.Id)} to {nameof(Guid)}. Id: {id}"
-            );
+            return;
         }
-    }
 
-    public ImmutableArray<string>? Roles =>
-        _httpContextAccessor
-            .HttpContext?.User.FindAll(ClaimTypes.Role)
+        Id = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        Roles = httpContextAccessor
+            .HttpContext.User.FindAll(ClaimTypes.Role)
             .Select(x => x.Value)
-            .ToImmutableArray();
+            .ToFrozenSet();
+    }
 }

@@ -7,7 +7,7 @@ using VsaTemplate.Tests.Infrastructure;
 namespace VsaTemplate.Tests;
 
 [SetUpFixture]
-public sealed class SetUp
+public sealed class TestSetUpFixture
 {
     internal static IServiceScopeFactory ScopeFactory { get; private set; } = null!;
     internal static TestDatabase? Database { get; private set; }
