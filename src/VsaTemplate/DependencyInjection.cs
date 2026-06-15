@@ -75,8 +75,8 @@ public static class DependencyInjection
 
             // Services
             builder.Services.AddSingleton(TimeProvider.System);
-
             builder.Services.AddScoped<CurrentUser>();
+            builder.Services.AddScoped<DomainEventDispatcher>();
         }
     }
 }
