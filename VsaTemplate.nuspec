@@ -6,6 +6,10 @@
     <title>Vertical Slice Architecture Template</title>
     <authors>Maidics Dávid</authors>
     <description>Vertical Slice Architecture template for ASP.NET.</description>
+    
+    <repository type="git" url="https://github.com/maidics/VerticalSliceArchitecture.git" branch="main" />
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>vertical-slice architecture vsa template csharp dotnet minimal-api react-client</tags>
     <readme>README.md</readme>
 

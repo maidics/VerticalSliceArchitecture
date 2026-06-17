@@ -2,14 +2,29 @@
 
 This template provides a lightweight starting point for ASP.NET solutions. While inspired by [Jason Taylor's Clean Architecture](https://github.com/jasontaylordev/CleanArchitecture/tree/main), this project focuses strictly on Vertical Slice Architecture.
 
+## Install the template
+
+```
+dotnet new install Vertical.Slice.Architecture
+```
+
 ## Key Features
 - **Target Framework**: .NET SDK 10.0.202.
-- **No MediatR dependency**: Uses lightweight reflection at application startup to automatically discover and register IRequestHandler implementations and map Minimal API endpoint groups.
-- **Native Pipeline Filters**: Because MediatR was removed, MediatR PipelineBehaviors have been replaced with ASP.NET Core's native IEndpointFilter. Cross-cutting concerns (validation, logging, performance) are handled natively at the endpoint level.
+- **No MediatR dependency**: Uses lightweight reflection at application startup to automatically discover and register IRequestHandler & IDomainEventHandler
+- **Native Pipeline Filters**: Because MediatR was removed, MediatR PipelineBehaviors have been replaced with native IEndpointFilter implementations. Cross-cutting concerns (validation, logging, performance) are handled natively at the endpoint level.
 - **Persistence**: Configured with EF Core and SQLite out of the box.
-- **App Host & SPA (WIP)**: Uses .NET App Host to orchestrate the backend and a React SPA (located in the ClientApp folder). Note: The React client integration is currently a work in progress.
+- **App Host & SPA (WIP)**: Uses .NET App Host to orchestrate the backend and a React SPA. Note: The React client integration is currently a work in progress.
 
-## Project Structure
+### Technologies
+- [ASP.NET Core 10](https://learn.microsoft.com/en-us/aspnet/core/overview?view=aspnetcore-10.0)
+- [Aspire](https://aspire.dev/)
+- [React 19](https://react.dev/)
+- [EF Core 10](https://learn.microsoft.com/en-us/ef/core/)
+- [FluentValidation](https://docs.fluentvalidation.net/en/latest/)
+- [Scalar](https://scalar.com/)
+- [NUnit](https://nunit.org/), [Shouldly](https://docs.shouldly.org/), [Moq](https://github.com/devlooped/moq) & [Respawn](https://github.com/jbogard/Respawn)
+
+## Structure
 Code is grouped by feature rather than technical layer. Everything required to execute a specific feature lives in a single folder inside the Features directory.
 
 ```
