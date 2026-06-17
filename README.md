@@ -18,6 +18,7 @@ dotnet new vsa-sln -n [SolutionName]
 - **Target Framework**: .NET SDK 10.0.202.
 - **No MediatR dependency**: Uses lightweight reflection at application startup to automatically discover and register IRequestHandler & IDomainEventHandler
 - **Native Pipeline Filters**: Because MediatR was removed, MediatR PipelineBehaviors have been replaced with native IEndpointFilter implementations. Cross-cutting concerns (validation, logging, performance) are handled natively at the endpoint level.
+- **Explicit Domain Event Publishing**: the IDomainEvent implementations are published by the IDomainServiceDispatcher service
 - **Persistence**: Configured with EF Core and SQLite out of the box.
 - **App Host & SPA (WIP)**: Uses .NET App Host to orchestrate the backend and a React SPA. Note: The React client integration is currently a work in progress.
 
