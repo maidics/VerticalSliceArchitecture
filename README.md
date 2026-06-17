@@ -8,6 +8,12 @@ This template provides a lightweight starting point for ASP.NET solutions. While
 dotnet new install Vertical.Slice.Architecture
 ```
 
+## Create a new solution
+
+```
+dotnet new vsa-sln -n [SolutionName]
+```
+
 ## Key Features
 - **Target Framework**: .NET SDK 10.0.202.
 - **No MediatR dependency**: Uses lightweight reflection at application startup to automatically discover and register IRequestHandler & IDomainEventHandler
