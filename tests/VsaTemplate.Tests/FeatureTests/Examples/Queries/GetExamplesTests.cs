@@ -6,7 +6,7 @@ using VsaTemplate.Tests.Infrastructure.Common;
 
 namespace VsaTemplate.Tests.FeatureTests.Examples.Queries;
 
-public sealed class GetExamplesTests : FeatureTestBase
+public sealed class GetExamplesTests : ApplicationTestBase
 {
     [TestCase(0)]
     [TestCase(10)]
@@ -18,7 +18,7 @@ public sealed class GetExamplesTests : FeatureTestBase
         {
             var example = new Example { Content = $"test{i}" };
 
-            await TestApp.AddAsync(example);
+            await Testing.AddAsync(example);
 
             examples.Add(example);
         }

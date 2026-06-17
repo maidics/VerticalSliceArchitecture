@@ -7,7 +7,7 @@ using VsaTemplate.Tests.Infrastructure.Common;
 
 namespace VsaTemplate.Tests.FeatureTests.Examples.Queries;
 
-public sealed class GetExampleByIdTests : FeatureTestBase
+public sealed class GetExampleByIdTests : ApplicationTestBase
 {
     [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
@@ -24,7 +24,7 @@ public sealed class GetExampleByIdTests : FeatureTestBase
     {
         var example = new Example { Content = "test" };
 
-        await TestApp.AddAsync(example);
+        await Testing.AddAsync(example);
 
         var handler = GetService<GetExampleByIdQueryRequestHandler>();
 

@@ -1,22 +1,17 @@
 using System.Collections.Frozen;
-using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using System.Net.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Database;
 using VsaTemplate.Features.Users;
+using VsaTemplate.Infrastructure;
 
 namespace VsaTemplate.Tests.Infrastructure;
 
-public static class TestApp
+public static class Testing
 {
-    private static HttpClient? _httpClient;
-
     private static string? _userId;
     private static FrozenSet<string>? _roles;
 
@@ -28,8 +23,6 @@ public static class TestApp
     {
         if (TestSetUpFixture.Database is not null)
             await TestSetUpFixture.Database.ResetAsync();
-
-        _httpClient?.Dispose();
 
         _userId = null;
         _roles = [];
@@ -43,8 +36,6 @@ public static class TestApp
         {
             await roleManager.CreateAsync(new IdentityRole<Guid>(role));
         }
-
-        _httpClient = TestSetUpFixture.CreateHttpClient();
     }
 
     public static async Task<Guid> RunAsUserAsync(string email, string password, string[] roles)
@@ -78,36 +69,6 @@ public static class TestApp
         return user.Id;
     }
 
-    public static async Task<HttpResponseMessage> SendPostAsync(string uri, IRequest request)
-    {
-        ArgumentNullException.ThrowIfNull(_httpClient);
-
-        return await _httpClient.PostAsJsonAsync(uri, request);
-    }
-
-    public static async Task<HttpResponseMessage> SendGetAsync(
-        [StringSyntax(StringSyntaxAttribute.Uri)] string uri
-    )
-    {
-        ArgumentNullException.ThrowIfNull(_httpClient);
-
-        return await _httpClient.GetAsync(uri);
-    }
-
-    public static async Task<HttpResponseMessage> SendPutAsync(string uri, IRequest request)
-    {
-        ArgumentNullException.ThrowIfNull(_httpClient);
-
-        return await _httpClient.PutAsJsonAsync(uri, request);
-    }
-
-    public static async Task<HttpResponseMessage> SendDeleteAsync(string uri)
-    {
-        ArgumentNullException.ThrowIfNull(_httpClient);
-
-        return await _httpClient.DeleteAsync(uri);
-    }
-
     public static async Task<TEntity?> FirstOrDefaultAsync<TEntity>(
         Expression<Func<TEntity, bool>> expression
     )
@@ -137,5 +98,13 @@ public static class TestApp
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         return await context.Set<TEntity>().CountAsync();
+    }
+
+    public static async Task DispatchDomainEventAsync(IDomainEvent @event)
+    {
+        using var scope = TestSetUpFixture.ScopeFactory.CreateScope();
+        var dispatcher = scope.ServiceProvider.GetRequiredService<IDomainEventDispatcher>();
+
+        await dispatcher.DispatchAsync(@event, CancellationToken.None);
     }
 }

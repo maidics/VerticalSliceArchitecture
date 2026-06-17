@@ -7,7 +7,7 @@ using VsaTemplate.Tests.Infrastructure.Common;
 
 namespace VsaTemplate.Tests.FeatureTests.Examples.Commands;
 
-public sealed class DeleteExampleTests : FeatureTestBase
+public sealed class DeleteExampleTests : ApplicationTestBase
 {
     [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
@@ -23,14 +23,14 @@ public sealed class DeleteExampleTests : FeatureTestBase
     {
         var example = new Example { Content = "test" };
 
-        await TestApp.AddAsync(example);
+        await Testing.AddAsync(example);
 
         var handler = GetService<DeleteExampleCommandRequestHandler>();
 
         var result = await handler.Handle(example.Id, CancellationToken.None);
         result.ShouldBeSuccessful(ResultType.Success);
 
-        var deleted = await TestApp.FirstOrDefaultAsync<Example>(x => x.Id == example.Id);
+        var deleted = await Testing.FirstOrDefaultAsync<Example>(x => x.Id == example.Id);
         deleted.ShouldBeNull();
     }
 }

@@ -3,7 +3,7 @@ using VsaTemplate.Database;
 
 namespace VsaTemplate.Features.Examples.Events;
 
-public sealed record ExampleContentAppendedEvent(Example Example) : IDomainEvent;
+public sealed record ExampleContentAppendedEvent(string ExampleId) : IDomainEvent;
 
 public sealed class ExampleContentAppendedEventHandler
     : IDomainEventHandler<ExampleContentAppendedEvent>
@@ -20,7 +20,15 @@ public sealed class ExampleContentAppendedEventHandler
         CancellationToken cancellationToken
     )
     {
-        @event.Example.HasAppendedContent = true;
+        var example = await _context.Examples.FirstOrDefaultAsync(
+            x => x.Id == @event.ExampleId,
+            cancellationToken
+        );
+
+        if (example is null)
+            throw new InvalidOperationException($"Example not found: {@event.ExampleId}");
+
+        example.HasAppendedContent = true;
 
         await _context.SaveChangesAsync(cancellationToken);
     }

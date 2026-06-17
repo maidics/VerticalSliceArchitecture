@@ -12,6 +12,6 @@ public sealed class Example : BaseEntity
     {
         Content += additionalContent;
 
-        return new ExampleContentAppendedEvent(this);
+        return new ExampleContentAppendedEvent(Id);
     }
 }

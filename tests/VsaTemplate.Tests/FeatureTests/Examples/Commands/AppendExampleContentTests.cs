@@ -8,13 +8,13 @@ using VsaTemplate.Tests.Infrastructure.Common;
 
 namespace VsaTemplate.Tests.FeatureTests.Examples.Commands;
 
-public sealed class AppendExampleContentTests : FeatureTestBase
+public sealed class AppendExampleContentTests : ApplicationTestBase
 {
     [Test]
     public async Task ShouldReturnValidationErrors()
     {
         var command = new AppendExampleContentCommand(Guid.NewGuid().ToString(), "");
-        var validator = new AppendExampleContentCommandValidator();
+        var validator = GetService<AppendExampleContentCommandValidator>();
 
         var result = await validator.TestValidateAsync(command);
         result
@@ -39,8 +39,8 @@ public sealed class AppendExampleContentTests : FeatureTestBase
         var example1 = new Example { Content = "test-content" };
         var example2 = new Example { Content = "test" };
 
-        await TestApp.AddAsync(example1);
-        await TestApp.AddAsync(example2);
+        await Testing.AddAsync(example1);
+        await Testing.AddAsync(example2);
 
         var command = new AppendExampleContentCommand(example2.Id, "-content");
 
@@ -58,16 +58,16 @@ public sealed class AppendExampleContentTests : FeatureTestBase
     {
         var example = new Example { Content = "test" };
 
-        await TestApp.AddAsync(example);
+        await Testing.AddAsync(example);
 
         var command = new AppendExampleContentCommand(example.Id, "-content");
 
         var handler = GetService<AppendExampleContentCommandHandler>();
 
         var result = await handler.Handle(command, CancellationToken.None);
-        result.ShouldBeSuccessful(ResultType.Success);
+        result.ShouldBeSuccessful();
 
-        var updated = await TestApp.FirstOrDefaultAsync<Example>(x => x.Id == example.Id);
+        var updated = await Testing.FirstOrDefaultAsync<Example>(x => x.Id == example.Id);
         updated!.Content.ShouldBe(example.Content + command.AdditionalContent);
     }
 }

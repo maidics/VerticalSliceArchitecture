@@ -7,7 +7,7 @@ using VsaTemplate.Tests.Infrastructure.Common;
 
 namespace VsaTemplate.Tests.FeatureTests.Examples.Commands;
 
-public sealed class UpdateExampleTests : FeatureTestBase
+public sealed class UpdateExampleTests : ApplicationTestBase
 {
     [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
@@ -25,7 +25,7 @@ public sealed class UpdateExampleTests : FeatureTestBase
     {
         var example = new Example { Content = "test" };
 
-        await TestApp.AddAsync(example);
+        await Testing.AddAsync(example);
 
         var command = new UpdateExampleCommand(example.Id, "new-test-content");
 
@@ -34,7 +34,7 @@ public sealed class UpdateExampleTests : FeatureTestBase
         var result = await handler.Handle(command, CancellationToken.None);
         result.ShouldBeSuccessful();
 
-        var updated = await TestApp.FirstOrDefaultAsync<Example>(x => x.Id == example.Id);
+        var updated = await Testing.FirstOrDefaultAsync<Example>(x => x.Id == example.Id);
         updated!.Content.ShouldBe(command.Content);
     }
 }

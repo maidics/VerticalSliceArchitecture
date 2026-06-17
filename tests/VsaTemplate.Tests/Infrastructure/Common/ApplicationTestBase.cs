@@ -1,19 +1,20 @@
 using Microsoft.Extensions.DependencyInjection;
-using VsaTemplate.Common.Interfaces;
-using VsaTemplate.Infrastructure;
 
 namespace VsaTemplate.Tests.Infrastructure.Common;
 
-public abstract class FeatureTestBase
+public abstract class ApplicationTestBase
 {
     private IServiceScope Scope = null!;
 
     [SetUp]
     public async Task Setup()
     {
-        await TestApp.ResetState();
+        await Testing.ResetState();
 
         Scope = TestSetUpFixture.ScopeFactory.CreateScope();
+
+        var dispatcherSpy = Scope.ServiceProvider.GetRequiredService<DomainEventDispatcherSpy>();
+        dispatcherSpy.ClearDomainEvents();
     }
 
     [TearDown]

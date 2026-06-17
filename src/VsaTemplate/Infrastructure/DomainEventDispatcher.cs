@@ -20,11 +20,16 @@ public sealed class DomainEventDispatcher : IDomainEventDispatcher
     public async Task DispatchAsync<TEvent>(TEvent @event, CancellationToken cancellationToken)
         where TEvent : IDomainEvent
     {
-        var handlers = _serviceProvider.GetServices<IDomainEventHandler<TEvent>>();
+        var eventType = @event.GetType();
+        var handlerType = typeof(IDomainEventHandler<>).MakeGenericType(eventType);
+        var handlers = _serviceProvider.GetServices(handlerType);
+
+        var handleMethod = handlerType.GetMethod(nameof(IDomainEventHandler<>.Handle));
 
         foreach (var handler in handlers)
         {
-            await handler.Handle(@event, cancellationToken);
+            var task = (Task)handleMethod!.Invoke(handler, [@event, cancellationToken])!;
+            await task;
         }
     }
 }

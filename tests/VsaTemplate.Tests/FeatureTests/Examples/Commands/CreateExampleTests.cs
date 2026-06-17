@@ -7,14 +7,14 @@ using VsaTemplate.Tests.Infrastructure.Common;
 
 namespace VsaTemplate.Tests.FeatureTests.Examples.Commands;
 
-public sealed class CreateExampleTests : FeatureTestBase
+public sealed class CreateExampleTests : ApplicationTestBase
 {
     [Test]
     public async Task ShouldReturnConflictIfExampleWithContentExists()
     {
         var example = new Example { Content = "test" };
 
-        await TestApp.AddAsync(example);
+        await Testing.AddAsync(example);
 
         var command = new CreateExampleCommand(example.Content);
 
@@ -37,7 +37,7 @@ public sealed class CreateExampleTests : FeatureTestBase
         var result = await handler.Handle(command, CancellationToken.None);
         result.ShouldBeSuccessful();
 
-        var example = await TestApp.FirstOrDefaultAsync<Example>(x => x.Id == result.Value);
+        var example = await Testing.FirstOrDefaultAsync<Example>(x => x.Id == result.Value);
         example.ShouldNotBeNull();
         example.Content.ShouldBe(command.Content);
     }
