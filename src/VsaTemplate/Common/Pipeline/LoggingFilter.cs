@@ -10,7 +10,7 @@ public sealed class LoggingFilter : IEndpointFilter
     private readonly ILogger<LoggingFilter> _logger;
     private readonly IUser _user;
 
-    public LoggingFilter(ILogger<LoggingFilter> logger, CurrentUser user)
+    public LoggingFilter(ILogger<LoggingFilter> logger, IUser user)
     {
         _logger = logger;
         _user = user;

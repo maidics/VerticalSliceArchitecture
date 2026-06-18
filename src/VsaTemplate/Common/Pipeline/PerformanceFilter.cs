@@ -10,7 +10,7 @@ public sealed class PerformanceFilter : IEndpointFilter
     private readonly ILogger<PerformanceFilter> _logger;
     private readonly IUser _user;
 
-    public PerformanceFilter(ILogger<PerformanceFilter> logger, CurrentUser user)
+    public PerformanceFilter(ILogger<PerformanceFilter> logger, IUser user)
     {
         _logger = logger;
         _user = user;

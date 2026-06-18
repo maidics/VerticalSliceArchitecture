@@ -23,7 +23,7 @@ public sealed class ValidationFilter : IEndpointFilter
     private readonly ILogger<ValidationFilter> _logger;
     private readonly IUser _user;
 
-    public ValidationFilter(ILogger<ValidationFilter> logger, CurrentUser user)
+    public ValidationFilter(ILogger<ValidationFilter> logger, IUser user)
     {
         _logger = logger;
         _user = user;

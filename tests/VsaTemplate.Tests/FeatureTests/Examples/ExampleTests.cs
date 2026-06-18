@@ -13,9 +13,10 @@ public sealed class ExampleFeatureTests
 
         var example = new Example { Content = content };
 
-        var @event = example.AppendContent(extra);
+        example.AppendContent(extra);
 
         example.Content.ShouldBe(content + extra);
-        @event.ExampleId.ShouldBe(example.Id);
+
+        example.DomainEvents.Count.ShouldBe(1);
     }
 }

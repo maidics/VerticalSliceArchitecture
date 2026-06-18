@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using VsaTemplate.Common.BaseClasses;
 using VsaTemplate.Common.Interfaces;
-using VsaTemplate.Infrastructure;
 
 namespace VsaTemplate.Database.Interceptors;
 
@@ -12,7 +11,7 @@ public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
     private readonly IUser _user;
     private readonly TimeProvider _timeProvider;
 
-    public AuditableEntityInterceptor(CurrentUser user, TimeProvider timeProvider)
+    public AuditableEntityInterceptor(IUser user, TimeProvider timeProvider)
     {
         _user = user;
         _timeProvider = timeProvider;
