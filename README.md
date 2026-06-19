@@ -79,5 +79,4 @@ To test application `IRequest` and `IDomainEvent` implementations and their hand
 - The domain event spy is cleared.
 
 ## EF Core Entity Configuration Validation
--
-To test EF Core entity configuration without needing a database connection, inherit from `EntityConfigurationTestBase<TConfiguration, TEntity>`. The class provides helper methods to gain access to the required objects for validation.
+- To test EF Core entity configuration without needing a database connection, inherit from `EntityConfigurationTestBase<TConfiguration, TEntity>`. The class provides helper methods to gain access to the required objects for validation.
