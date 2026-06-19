@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Interfaces.Features;
@@ -16,13 +17,13 @@ public class ExampleEndpoints : IEndpointGroup
     {
         builder.MapPost("", CreateExample);
 
-        builder.MapGet("", GetExamples);
+        builder.MapGet("all", GetExamples);
 
         builder.MapPut("", UpdateExample);
 
-        builder.MapDelete("{exampleId}", DeleteExample);
+        builder.MapDelete("", DeleteExample);
 
-        builder.MapGet("{exampleId}", GetExampleById);
+        builder.MapGet("", GetExampleById);
 
         builder.MapPut("append-content", AppendExampleContent);
     }
@@ -39,11 +40,11 @@ public class ExampleEndpoints : IEndpointGroup
     }
 
     public static async Task<Ok<List<ExampleDto>>> GetExamples(
-        GetExamplesQueryRequestHandler requestHandler,
+        GetExamplesQueryHandler handler,
         CancellationToken cancellationToken
     )
     {
-        var result = await requestHandler.Handle(cancellationToken);
+        var result = await handler.Handle(cancellationToken);
 
         return TypedResults.Ok(result);
     }
@@ -60,23 +61,23 @@ public class ExampleEndpoints : IEndpointGroup
     }
 
     public static async Task<Results<NoContent, ProblemHttpResult>> DeleteExample(
-        DeleteExampleCommandRequestHandler requestHandler,
-        string exampleId,
+        [AsParameters] DeleteExampleCommand command,
+        DeleteExampleCommandHandler handler,
         CancellationToken cancellationToken
     )
     {
-        var result = await requestHandler.Handle(exampleId, cancellationToken);
+        var result = await handler.Handle(command, cancellationToken);
 
         return result.ToTypedResult();
     }
 
     public static async Task<Results<Ok<ExampleDto>, ProblemHttpResult>> GetExampleById(
-        GetExampleByIdQueryRequestHandler requestHandler,
-        string exampleId,
+        [AsParameters] GetExampleByIdQuery query,
+        GetExampleByIdQueryHandler handler,
         CancellationToken cancellationToken
     )
     {
-        var result = await requestHandler.Handle(exampleId, cancellationToken);
+        var result = await handler.Handle(query, cancellationToken);
 
         return result.ToTypedResult();
     }

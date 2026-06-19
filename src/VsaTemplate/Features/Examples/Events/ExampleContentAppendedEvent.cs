@@ -1,5 +1,5 @@
 using VsaTemplate.Common.Interfaces.Features;
-using VsaTemplate.Database;
+using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Events;
 

@@ -2,8 +2,8 @@ using Scalar.AspNetCore;
 using VsaTemplate;
 using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Pipeline;
-using VsaTemplate.Database;
 using VsaTemplate.Features.Users;
+using VsaTemplate.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,9 +40,7 @@ app.MapGroup("/api")
     .MapEndpoints();
 
 //app.MapDefaultEndpoints(); // ServiceDefaults observability
-app.MapGroup("/api/identity") /* TODO: add logging without logging credentials */
-    .MapIdentityApi<ApplicationUser>()
-    .WithTags("Users");
+app.MapGroup("/api/identity").MapIdentityApi<ApplicationUser>().WithTags("Users");
 
 app.MapOpenApi();
 app.MapScalarApiReference();

@@ -17,7 +17,6 @@ namespace VsaTemplate.Common.Pipeline;
     If you want to validate the request inside or after the Minimal API you have to inject it's validator and validate manually.
 */
 
-//TODO: check if the framework will return negative HTTP response automatically if a query or route param is empty
 public sealed class ValidationFilter : IEndpointFilter
 {
     private readonly ILogger<ValidationFilter> _logger;

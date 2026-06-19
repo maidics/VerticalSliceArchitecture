@@ -1,28 +1,38 @@
-using VsaTemplate.Common.Interfaces;
+using FluentValidation;
 using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
-using VsaTemplate.Database;
+using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Queries;
 
-public sealed class GetExampleByIdQueryRequestHandler : IRequestHandler
+public sealed record GetExampleByIdQuery(string Id) : IRequest;
+
+public sealed class GetExampleByIdQueryValidator : AbstractValidator<GetExampleByIdQuery>
+{
+    public GetExampleByIdQueryValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty();
+    }
+}
+
+public sealed class GetExampleByIdQueryHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public GetExampleByIdQueryRequestHandler(ApplicationDbContext context)
+    public GetExampleByIdQueryHandler(ApplicationDbContext context)
     {
         _context = context;
     }
 
     public async Task<Result<ExampleDto>> Handle(
-        string exampleId,
+        GetExampleByIdQuery query,
         CancellationToken cancellationToken
     )
     {
         var example = await _context
             .Examples.AsNoTracking()
-            .Where(x => x.Id == exampleId)
-            .Select(x => new ExampleDto(x.Id, x.Content))
+            .Where(x => x.Id == query.Id)
+            .Select(x => new ExampleDto(x.Id, x.Content, x.HasAppendedContent))
             .FirstOrDefaultAsync(cancellationToken);
 
         if (example is null)

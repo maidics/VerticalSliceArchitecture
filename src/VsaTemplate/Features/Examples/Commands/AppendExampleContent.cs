@@ -1,7 +1,7 @@
 using FluentValidation;
 using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
-using VsaTemplate.Database;
+using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Commands;
 

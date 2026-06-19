@@ -1,7 +1,5 @@
 using System.Reflection;
-using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Interfaces.Features;
-using VsaTemplate.Features.Examples.Events;
 
 namespace VsaTemplate.Common.Extensions;
 

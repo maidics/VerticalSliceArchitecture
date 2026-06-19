@@ -1,23 +1,36 @@
-using VsaTemplate.Common.Interfaces;
+using FluentValidation;
 using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
-using VsaTemplate.Database;
+using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Commands;
 
-public sealed class DeleteExampleCommandRequestHandler : IRequestHandler
+public sealed record DeleteExampleCommand(string Id) : IRequest;
+
+public sealed class DeleteExampleCommandValidator : AbstractValidator<DeleteExampleCommand>
+{
+    public DeleteExampleCommandValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty();
+    }
+}
+
+public sealed class DeleteExampleCommandHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public DeleteExampleCommandRequestHandler(ApplicationDbContext context)
+    public DeleteExampleCommandHandler(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Result> Handle(string exampleId, CancellationToken cancellationToken)
+    public async Task<Result> Handle(
+        DeleteExampleCommand command,
+        CancellationToken cancellationToken
+    )
     {
         var example = await _context.Examples.FirstOrDefaultAsync(
-            x => x.Id == exampleId,
+            x => x.Id == command.Id,
             cancellationToken
         );
 

@@ -180,5 +180,3 @@ public enum ResultType
     Unauthorized,
     Forbidden,
 }
-
-//TODO: move this to the Result class

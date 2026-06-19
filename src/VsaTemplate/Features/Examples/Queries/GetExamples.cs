@@ -1,14 +1,13 @@
-using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Interfaces.Features;
-using VsaTemplate.Database;
+using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Queries;
 
-public sealed class GetExamplesQueryRequestHandler : IRequestHandler
+public sealed class GetExamplesQueryHandler : IRequestHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public GetExamplesQueryRequestHandler(ApplicationDbContext context)
+    public GetExamplesQueryHandler(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -17,7 +16,7 @@ public sealed class GetExamplesQueryRequestHandler : IRequestHandler
     {
         return await _context
             .Examples.AsNoTracking()
-            .Select(x => new ExampleDto(x.Id, x.Content))
+            .Select(x => new ExampleDto(x.Id, x.Content, x.HasAppendedContent))
             .ToListAsync(cancellationToken);
     }
 }

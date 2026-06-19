@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Pipeline;
-using VsaTemplate.Database;
 using VsaTemplate.Infrastructure;
+using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate;
 
@@ -50,7 +50,7 @@ public static class DependencyInjection
 
             // Services
             builder.Services.AddSingleton(TimeProvider.System);
-            builder.Services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
+            builder.Services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
             builder.Services.AddScoped<IUser, CurrentUser>();
         }
     }
