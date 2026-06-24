@@ -4,7 +4,7 @@ using Respawn;
 
 namespace VsaTemplate.FunctionalTests.Infrastructure;
 
-// credit: Jason Taylor
+// credit: https://github.com/jasontaylordev/CleanArchitecture
 public sealed class TestDatabase : IAsyncDisposable
 {
     private readonly DbConnection _connection;

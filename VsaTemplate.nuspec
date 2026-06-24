@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Vertical.Slice.Architecture</id>
-    <version>1.2.1</version>
+    <version>1.3.0</version>
     <title>Vertical Slice Architecture Template</title>
     <authors>Maidics Dávid</authors>
     <description>Vertical Slice Architecture template for ASP.NET.</description>
@@ -20,6 +20,6 @@
 
   <files>
     <file src="README.md" />
-    <file src="**\*" target="content" exclude="**\bin\**;**\obj\**;**\.vs\**;**\.idea\**;**\.git\**;**\node_modules\**;**\dist\**;**\out\**;**\.nuget\**;*.nuspec;*.nupkg;**\*.user" />
+    <file src="**\*" target="content" exclude="**\bin\**;**\obj\**;**\.vs\**;**\.idea\**;**\.git\**;**\node_modules\**;**\dist\**;**\out\**;**\.nuget\**;*.nuspec;*.nupkg;**\*.user;pack-nuspec.bat" />
   </files>
 </package>

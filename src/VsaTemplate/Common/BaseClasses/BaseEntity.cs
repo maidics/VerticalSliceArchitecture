@@ -3,7 +3,7 @@ using VsaTemplate.Common.Interfaces.Features;
 
 namespace VsaTemplate.Common.BaseClasses;
 
-//credit: Jason Taylor
+//credit: https://github.com/jasontaylordev/CleanArchitecture
 public abstract class BaseEntity
 {
     // This can easily be modified to BaseEntity<T> to support different types for Id

@@ -28,11 +28,13 @@ public static class Testing
         _roles = [];
 
         using var scope = TestSetUpFixture.ScopeFactory.CreateScope();
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<
+            RoleManager<IdentityRole<Guid>>
+        >();
 
         foreach (var role in Roles.All)
         {
-            await roleManager.CreateAsync(new IdentityRole(role));
+            await roleManager.CreateAsync(new IdentityRole<Guid>(role));
         }
     }
 
