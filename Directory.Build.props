@@ -7,5 +7,10 @@
     <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <!-- SQLitePCLRaw.lib.e_sqlite3 vulnerability issue: NU1903 -->
+    <NuGetAuditSuppress>
+      https://github.com/advisories/GHSA-2m69-gcr7-jv3q
+    </NuGetAuditSuppress>
   </PropertyGroup>
 </Project>
