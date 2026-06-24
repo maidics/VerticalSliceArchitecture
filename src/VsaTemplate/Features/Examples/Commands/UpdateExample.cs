@@ -1,12 +1,11 @@
 using FluentValidation;
-using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Commands;
 
-public sealed record UpdateExampleCommand(string Id, string Content) : IRequest;
+public sealed record UpdateExampleCommand(Guid Id, string Content) : IRequest;
 
 public sealed class UpdateExampleCommandValidator : AbstractValidator<UpdateExampleCommand>
 {

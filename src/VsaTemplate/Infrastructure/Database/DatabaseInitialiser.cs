@@ -7,12 +7,12 @@ public sealed class DatabaseInitialiser
 {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 
     public DatabaseInitialiser(
         ApplicationDbContext context,
         UserManager<ApplicationUser> userManager,
-        RoleManager<IdentityRole> roleManager
+        RoleManager<IdentityRole<Guid>> roleManager
     )
     {
         _context = context;
@@ -32,7 +32,7 @@ public sealed class DatabaseInitialiser
     {
         foreach (var role in Roles.All)
         {
-            var result = await _roleManager.CreateAsync(new IdentityRole(role));
+            var result = await _roleManager.CreateAsync(new IdentityRole<Guid>(role));
 
             if (!result.Succeeded)
                 throw new InvalidOperationException(

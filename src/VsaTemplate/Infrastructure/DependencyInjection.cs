@@ -1,17 +1,20 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Features.Users;
+using VsaTemplate.Infrastructure.Database;
 using VsaTemplate.Infrastructure.Database.Interceptors;
 using VsaTemplate.Shared;
 
-namespace VsaTemplate.Infrastructure.Database;
+namespace VsaTemplate.Infrastructure;
 
 public static class DependencyInjection
 {
     extension(IHostApplicationBuilder builder)
     {
-        public void AddDatabaseServices()
+        public void AddInfrastructureServices()
         {
+            // Db
             var connectionString = builder.Configuration.GetConnectionString(Services.Database);
             ArgumentException.ThrowIfNullOrEmpty(connectionString);
 
@@ -32,11 +35,16 @@ public static class DependencyInjection
 
             builder
                 .Services.AddIdentityApiEndpoints<ApplicationUser>()
-                .AddRoles<IdentityRole>()
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
             builder.Services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventInterceptor>();
+
+            // Other services
+            builder.Services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+            builder.Services.AddScoped<IUser, CurrentUser>();
+            builder.Services.AddSingleton(TimeProvider.System);
         }
     }
 }

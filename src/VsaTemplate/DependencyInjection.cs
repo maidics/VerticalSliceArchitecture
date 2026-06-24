@@ -2,10 +2,8 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using VsaTemplate.Common.Extensions;
-using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Pipeline;
 using VsaTemplate.Infrastructure;
-using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate;
 
@@ -15,8 +13,13 @@ public static class DependencyInjection
     {
         public void AddApplicationServices()
         {
-            // Database
-            builder.AddDatabaseServices();
+            // Infrastructure
+            builder.AddInfrastructureServices();
+
+            //Features
+            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            builder.Services.AddRequestHandlers();
+            builder.Services.AddDomainEventHandlers();
 
             // Web
             builder.Services.AddExceptionHandler<ExceptionHandler>();
@@ -42,16 +45,6 @@ public static class DependencyInjection
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddOpenApi();
-
-            //Features
-            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            builder.Services.AddRequestHandlers();
-            builder.Services.AddDomainEventHandlers();
-
-            // Services
-            builder.Services.AddSingleton(TimeProvider.System);
-            builder.Services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
-            builder.Services.AddScoped<IUser, CurrentUser>();
         }
     }
 }

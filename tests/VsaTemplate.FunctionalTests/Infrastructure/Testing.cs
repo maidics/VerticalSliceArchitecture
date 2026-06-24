@@ -12,10 +12,10 @@ namespace VsaTemplate.FunctionalTests.Infrastructure;
 
 public static class Testing
 {
-    private static string? _userId;
+    private static Guid? _userId;
     private static FrozenSet<string>? _roles;
 
-    public static string? GetUserId() => _userId;
+    public static Guid? GetUserId() => _userId;
 
     public static FrozenSet<string>? GetUserRoles() => _roles;
 
@@ -36,7 +36,7 @@ public static class Testing
         }
     }
 
-    public static async Task<string> RunAsUserAsync(string email, string password, string[] roles)
+    public static async Task<Guid> RunAsUserAsync(string email, string password, string[] roles)
     {
         if (roles.Any(role => !Roles.IsValid(role)))
             throw new ArgumentException(

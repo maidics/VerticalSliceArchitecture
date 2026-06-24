@@ -12,7 +12,7 @@ public sealed class UpdateExampleTests : ApplicationTestBase
     [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
     {
-        var command = new UpdateExampleCommand(Guid.NewGuid().ToString(), "test");
+        var command = new UpdateExampleCommand(Guid.Empty, "test");
 
         var handler = GetService<UpdateExampleCommandHandler>();
 

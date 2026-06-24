@@ -24,7 +24,7 @@ public sealed class CreateExampleCommandHandler : IRequestHandler
         _context = context;
     }
 
-    public async Task<Result<string>> Handle(
+    public async Task<Result<Guid>> Handle(
         CreateExampleCommand command,
         CancellationToken cancellationToken
     )

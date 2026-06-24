@@ -1,19 +1,10 @@
-using FluentValidation;
 using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Queries;
 
-public sealed record GetExampleByIdQuery(string Id) : IRequest;
-
-public sealed class GetExampleByIdQueryValidator : AbstractValidator<GetExampleByIdQuery>
-{
-    public GetExampleByIdQueryValidator()
-    {
-        RuleFor(x => x.Id).NotEmpty();
-    }
-}
+public sealed record GetExampleByIdQuery(Guid Id) : IRequest;
 
 public sealed class GetExampleByIdQueryHandler : IRequestHandler
 {

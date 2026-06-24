@@ -1,4 +1,3 @@
-using FluentValidation.TestHelper;
 using Shouldly;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Features.Examples;
@@ -11,30 +10,9 @@ namespace VsaTemplate.FunctionalTests.FeatureTests.Examples.Commands;
 public sealed class DeleteExampleTests : ApplicationTestBase
 {
     [Test]
-    public async Task ShouldReturnValidationErrors()
-    {
-        var command = new DeleteExampleCommand("");
-        var validator = GetService<DeleteExampleCommandValidator>();
-
-        var result = await validator.TestValidateAsync(command);
-        result.IsValid.ShouldBeFalse();
-        result.ShouldHaveValidationErrorFor(x => x.Id);
-    }
-
-    [Test]
-    public async Task ShouldNotReturnValidationErrors()
-    {
-        var command = new DeleteExampleCommand("id");
-        var validator = GetService<DeleteExampleCommandValidator>();
-
-        var result = await validator.TestValidateAsync(command);
-        result.IsValid.ShouldBeTrue();
-    }
-
-    [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
     {
-        var command = new DeleteExampleCommand("id");
+        var command = new DeleteExampleCommand(Guid.Empty);
         var handler = GetService<DeleteExampleCommandHandler>();
 
         var result = await handler.Handle(command, CancellationToken.None);

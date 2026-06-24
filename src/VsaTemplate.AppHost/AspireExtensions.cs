@@ -1,6 +1,3 @@
-using Aspire.Hosting;
-using Aspire.Hosting.ApplicationModel;
-
 namespace VsaTemplate.AppHost;
 
 internal static class AspireExtensions

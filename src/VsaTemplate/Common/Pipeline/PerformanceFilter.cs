@@ -1,7 +1,5 @@
 using System.Diagnostics;
 using VsaTemplate.Common.Interfaces;
-using VsaTemplate.Common.Models;
-using VsaTemplate.Infrastructure;
 
 namespace VsaTemplate.Common.Pipeline;
 

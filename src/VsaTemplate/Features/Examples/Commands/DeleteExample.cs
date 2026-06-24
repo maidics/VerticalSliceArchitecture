@@ -1,19 +1,10 @@
-using FluentValidation;
 using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Commands;
 
-public sealed record DeleteExampleCommand(string Id) : IRequest;
-
-public sealed class DeleteExampleCommandValidator : AbstractValidator<DeleteExampleCommand>
-{
-    public DeleteExampleCommandValidator()
-    {
-        RuleFor(x => x.Id).NotEmpty();
-    }
-}
+public sealed record DeleteExampleCommand(Guid Id) : IRequest;
 
 public sealed class DeleteExampleCommandHandler : IRequestHandler
 {

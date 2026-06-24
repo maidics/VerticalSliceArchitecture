@@ -6,8 +6,8 @@ namespace VsaTemplate.Infrastructure;
 
 public sealed class CurrentUser : IUser
 {
-    public string? Id { get; }
-    public FrozenSet<string>? Roles { get; }
+    public Guid? Id { get; }
+    public FrozenSet<string> Roles { get; } = [];
 
     public CurrentUser(IHttpContextAccessor httpContextAccessor)
     {
@@ -16,10 +16,30 @@ public sealed class CurrentUser : IUser
             return;
         }
 
-        Id = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var nameIdentifier = httpContextAccessor.HttpContext.User.FindFirstValue(
+            ClaimTypes.NameIdentifier
+        );
+
+        Id = ParseNameIdentifier(nameIdentifier);
+
         Roles = httpContextAccessor
             .HttpContext.User.FindAll(ClaimTypes.Role)
             .Select(x => x.Value)
             .ToFrozenSet();
+    }
+
+    private Guid? ParseNameIdentifier(string? nameIdentifier)
+    {
+        if (nameIdentifier is null)
+            return null;
+
+        if (!Guid.TryParse(nameIdentifier, out var id))
+        {
+            throw new InvalidOperationException(
+                $"Tried to parse user id to {nameof(Guid)}: '{nameIdentifier}'"
+            );
+        }
+
+        return id;
     }
 }

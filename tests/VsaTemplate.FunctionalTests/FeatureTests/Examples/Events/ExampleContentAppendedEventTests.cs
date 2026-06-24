@@ -29,7 +29,7 @@ public sealed class ExampleContentAppendedEventTests : ApplicationTestBase
     [Test]
     public async Task ShouldThrowIfExampleIsNotFound()
     {
-        var @event = new ExampleContentAppendedEvent("id");
+        var @event = new ExampleContentAppendedEvent(Guid.Empty);
 
         await Should.ThrowAsync<InvalidOperationException>(() =>
             Testing.DispatchDomainEventAsync(@event)

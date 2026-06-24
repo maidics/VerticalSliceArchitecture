@@ -5,7 +5,7 @@ using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Commands;
 
-public sealed record AppendExampleContentCommand(string ExampleId, string AdditionalContent)
+public sealed record AppendExampleContentCommand(Guid ExampleId, string AdditionalContent)
     : IRequest;
 
 public sealed class AppendExampleContentCommandValidator

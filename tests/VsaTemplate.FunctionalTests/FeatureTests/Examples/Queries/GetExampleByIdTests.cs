@@ -1,4 +1,3 @@
-using FluentValidation.TestHelper;
 using Shouldly;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Features.Examples;
@@ -11,30 +10,9 @@ namespace VsaTemplate.FunctionalTests.FeatureTests.Examples.Queries;
 public sealed class GetExampleByIdTests : ApplicationTestBase
 {
     [Test]
-    public async Task ShouldReturnValidationErrors()
-    {
-        var query = new GetExampleByIdQuery("");
-        var validator = GetService<GetExampleByIdQueryValidator>();
-
-        var result = await validator.TestValidateAsync(query);
-        result.IsValid.ShouldBeFalse();
-        result.ShouldHaveValidationErrorFor(x => x.Id);
-    }
-
-    [Test]
-    public async Task ShouldNotReturnValidationErrors()
-    {
-        var query = new GetExampleByIdQuery("id");
-        var validator = GetService<GetExampleByIdQueryValidator>();
-
-        var result = await validator.TestValidateAsync(query);
-        result.IsValid.ShouldBeTrue();
-    }
-
-    [Test]
     public async Task ShouldReturnNotFoundIfExampleDoesNotExists()
     {
-        var query = new GetExampleByIdQuery("id");
+        var query = new GetExampleByIdQuery(Guid.Empty);
         var handler = GetService<GetExampleByIdQueryHandler>();
 
         var result = await handler.Handle(query, CancellationToken.None);

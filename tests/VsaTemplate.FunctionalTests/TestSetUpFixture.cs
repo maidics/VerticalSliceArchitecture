@@ -1,6 +1,7 @@
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Projects;
 using VsaTemplate.FunctionalTests.Infrastructure;
 using VsaTemplate.Shared;
 
@@ -21,7 +22,7 @@ public sealed class TestSetUpFixture
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
         var cancellationToken = cts.Token;
 
-        var builder = await DistributedApplicationTestingBuilder.CreateAsync<Projects.TestAppHost>(
+        var builder = await DistributedApplicationTestingBuilder.CreateAsync<TestAppHost>(
             args: [],
             configureBuilder: (options, _) =>
             {

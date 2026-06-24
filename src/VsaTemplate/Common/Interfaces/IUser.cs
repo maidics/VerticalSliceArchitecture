@@ -4,6 +4,6 @@ namespace VsaTemplate.Common.Interfaces;
 
 public interface IUser
 {
-    string? Id { get; }
+    Guid? Id { get; }
     FrozenSet<string>? Roles { get; }
 }

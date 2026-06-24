@@ -3,7 +3,7 @@ using VsaTemplate.Infrastructure.Database;
 
 namespace VsaTemplate.Features.Examples.Events;
 
-public sealed record ExampleContentAppendedEvent(string ExampleId) : IDomainEvent;
+public sealed record ExampleContentAppendedEvent(Guid ExampleId) : IDomainEvent;
 
 public sealed class ExampleContentAppendedEventHandler
     : IDomainEventHandler<ExampleContentAppendedEvent>

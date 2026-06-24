@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using VsaTemplate.Common.Extensions;
-using VsaTemplate.Common.Interfaces;
 using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Features.Examples.Commands;
 using VsaTemplate.Features.Examples.Queries;
@@ -28,7 +26,7 @@ public class ExampleEndpoints : IEndpointGroup
         builder.MapPut("append-content", AppendExampleContent);
     }
 
-    public static async Task<Results<Ok<string>, ProblemHttpResult>> CreateExample(
+    public static async Task<Results<Ok<Guid>, ProblemHttpResult>> CreateExample(
         CreateExampleCommandHandler handler,
         CreateExampleCommand command,
         CancellationToken cancellationToken
