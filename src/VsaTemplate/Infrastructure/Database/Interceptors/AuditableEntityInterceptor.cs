@@ -5,7 +5,7 @@ using VsaTemplate.Common.Interfaces;
 
 namespace VsaTemplate.Infrastructure.Database.Interceptors;
 
-//credit: Jason Taylor
+//credit: https://github.com/jasontaylordev/CleanArchitecture
 public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
 {
     private readonly IUser _user;

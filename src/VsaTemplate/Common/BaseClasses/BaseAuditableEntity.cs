@@ -1,6 +1,6 @@
 namespace VsaTemplate.Common.BaseClasses;
 
-// credit: Jason Taylor
+// credit: https://github.com/jasontaylordev/CleanArchitecture
 public abstract class BaseAuditableEntity : BaseEntity
 {
     public DateTimeOffset CreatedOn { get; set; }

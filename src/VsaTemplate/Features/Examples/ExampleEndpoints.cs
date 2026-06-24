@@ -6,24 +6,25 @@ using VsaTemplate.Features.Examples.Queries;
 
 namespace VsaTemplate.Features.Examples;
 
-public class ExampleEndpoints : IEndpointGroup
+public sealed class ExampleEndpoints : IEndpointGroup
 {
     public static string Prefix => "Examples";
     public static string[] Tags => [Prefix];
 
     public static void Map(IEndpointRouteBuilder builder)
     {
-        builder.MapPost("", CreateExample);
+        // using EndpointRouteBuilderExtensions which sets method names (useful for client type generation)
+        builder.MapPost(CreateExample);
 
-        builder.MapGet("all", GetExamples);
+        builder.MapGet(GetExamples, "all");
 
-        builder.MapPut("", UpdateExample);
+        builder.MapPut(UpdateExample, "");
 
-        builder.MapDelete("", DeleteExample);
+        builder.MapDelete(DeleteExample, "");
 
-        builder.MapGet("", GetExampleById);
+        builder.MapGet(GetExampleById);
 
-        builder.MapPut("append-content", AppendExampleContent);
+        builder.MapPut(AppendExampleContent, "append-content");
     }
 
     public static async Task<Results<Ok<Guid>, ProblemHttpResult>> CreateExample(

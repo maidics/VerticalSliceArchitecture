@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- Credit: Jason Taylor As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <!-- Credit: https://github.com/jasontaylordev/CleanArchitecture As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
 

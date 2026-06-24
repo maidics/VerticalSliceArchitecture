@@ -4,7 +4,7 @@ using VsaTemplate.Common.BaseClasses;
 
 namespace VsaTemplate.Infrastructure.Database.Interceptors;
 
-//credit: Jason Taylor
+//credit: https://github.com/jasontaylordev/CleanArchitecture
 public sealed class DispatchDomainEventInterceptor : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(
