@@ -22,14 +22,15 @@ public sealed class TestSetUpFixture
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
         var cancellationToken = cts.Token;
 
-        var builder = await DistributedApplicationTestingBuilder.CreateAsync<TestAppHost>(
-            args: [],
-            configureBuilder: (options, _) =>
-            {
-                options.DisableDashboard = true;
-            },
-            cancellationToken
-        );
+        var builder =
+            await DistributedApplicationTestingBuilder.CreateAsync<VsaTemplate_TestAppHost>(
+                args: [],
+                configureBuilder: (options, _) =>
+                {
+                    options.DisableDashboard = true;
+                },
+                cancellationToken
+            );
 
         builder.Configuration["ASPIRE_ALLOW_UNSECURED_TRANSPORT"] = "true";
 

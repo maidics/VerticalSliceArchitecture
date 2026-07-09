@@ -22,7 +22,7 @@ public static class DependencyInjection
             builder.Services.AddDomainEventHandlers();
 
             // Web
-            builder.Services.AddExceptionHandler<ExceptionHandler>();
+            builder.Services.AddExceptionHandler<ProblemDetailsExceptionHandler>();
 
             builder.Services.AddCors(options =>
             {

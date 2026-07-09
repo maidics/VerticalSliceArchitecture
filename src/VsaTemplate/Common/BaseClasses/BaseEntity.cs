@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using VsaTemplate.Common.Interfaces.Features;
 
@@ -13,7 +14,7 @@ public abstract class BaseEntity
     private readonly List<IDomainEvent> _domainEvents = [];
 
     [NotMapped]
-    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public ReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     public void AddDomainEvent(IDomainEvent @event)
     {

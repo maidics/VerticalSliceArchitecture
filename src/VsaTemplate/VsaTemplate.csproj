@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VsaTemplate.ServiceDefaults\VsaTemplate.ServiceDefaults.csproj" />
     <ProjectReference Include="..\VsaTemplate.Shared\VsaTemplate.Shared.csproj" />
   </ItemGroup>
 

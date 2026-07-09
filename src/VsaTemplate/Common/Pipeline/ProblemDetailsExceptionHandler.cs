@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VsaTemplate.Common.Pipeline;
 
-public sealed class ExceptionHandler : IExceptionHandler
+public sealed class ProblemDetailsExceptionHandler : IExceptionHandler
 {
-    private readonly ILogger<ExceptionHandler> _logger;
+    private readonly ILogger<ProblemDetailsExceptionHandler> _logger;
 
-    public ExceptionHandler(ILogger<ExceptionHandler> logger)
+    public ProblemDetailsExceptionHandler(ILogger<ProblemDetailsExceptionHandler> logger)
     {
         _logger = logger;
     }

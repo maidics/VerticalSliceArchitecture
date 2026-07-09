@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using VsaTemplate.Common.Interfaces.Features;
 using VsaTemplate.Infrastructure;
 
@@ -13,7 +14,7 @@ public sealed class DomainEventDispatcherSpy : IDomainEventDispatcher
         _dispatcher = dispatcher;
     }
 
-    public IReadOnlyList<IDomainEvent> DispatchedEvents => _dispatchedEvents.AsReadOnly();
+    public ReadOnlyCollection<IDomainEvent> DispatchedEvents => _dispatchedEvents.AsReadOnly();
 
     //this is called in [SetUp]
     public void ClearDomainEvents() => _dispatchedEvents.Clear();

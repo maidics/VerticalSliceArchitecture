@@ -27,7 +27,7 @@ public sealed class ExampleEndpoints : IEndpointGroup
         builder.MapPut(AppendExampleContent, "append-content");
     }
 
-    public static async Task<Results<Ok<Guid>, ProblemHttpResult>> CreateExample(
+    private static async Task<Results<Ok<Guid>, ProblemHttpResult>> CreateExample(
         CreateExampleCommandHandler handler,
         CreateExampleCommand command,
         CancellationToken cancellationToken
@@ -38,7 +38,7 @@ public sealed class ExampleEndpoints : IEndpointGroup
         return result.ToTypedResult();
     }
 
-    public static async Task<Ok<List<ExampleDto>>> GetExamples(
+    private static async Task<Ok<List<ExampleDto>>> GetExamples(
         GetExamplesQueryHandler handler,
         CancellationToken cancellationToken
     )
@@ -48,7 +48,7 @@ public sealed class ExampleEndpoints : IEndpointGroup
         return TypedResults.Ok(result);
     }
 
-    public static async Task<Results<NoContent, ProblemHttpResult>> UpdateExample(
+    private static async Task<Results<NoContent, ProblemHttpResult>> UpdateExample(
         UpdateExampleCommandHandler handler,
         UpdateExampleCommand command,
         CancellationToken cancellationToken
@@ -59,7 +59,7 @@ public sealed class ExampleEndpoints : IEndpointGroup
         return result.ToTypedResult();
     }
 
-    public static async Task<Results<NoContent, ProblemHttpResult>> DeleteExample(
+    private static async Task<Results<NoContent, ProblemHttpResult>> DeleteExample(
         [AsParameters] DeleteExampleCommand command,
         DeleteExampleCommandHandler handler,
         CancellationToken cancellationToken
@@ -70,7 +70,7 @@ public sealed class ExampleEndpoints : IEndpointGroup
         return result.ToTypedResult();
     }
 
-    public static async Task<Results<Ok<ExampleDto>, ProblemHttpResult>> GetExampleById(
+    private static async Task<Results<Ok<ExampleDto>, ProblemHttpResult>> GetExampleById(
         [AsParameters] GetExampleByIdQuery query,
         GetExampleByIdQueryHandler handler,
         CancellationToken cancellationToken
@@ -81,7 +81,7 @@ public sealed class ExampleEndpoints : IEndpointGroup
         return result.ToTypedResult();
     }
 
-    public static async Task<Results<NoContent, ProblemHttpResult>> AppendExampleContent(
+    private static async Task<Results<NoContent, ProblemHttpResult>> AppendExampleContent(
         AppendExampleContentCommandHandler handler,
         AppendExampleContentCommand command,
         CancellationToken cancellationToken
