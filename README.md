@@ -69,7 +69,7 @@ Infrastructure/ # Services with external dependencies
 
 # Testing
 
-This solution uses **NUnit** as its primary testing framework. Testing is currently focused on the `FunctionalTests` project, which validates application logic by integrating with a real database spun up via **Aspire** and hosted in memory using `WebApplicationFactory`.
+This solution uses **NUnit** as its primary testing framework. Testing is currently focused on the `FunctionalTests` project, which validates application logic by integrating with a database orchestrated by **Aspire** and hosted in memory using `WebApplicationFactory`.
 
 ## Application Logic Validation
 
